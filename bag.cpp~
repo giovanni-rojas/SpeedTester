@@ -1,0 +1,62 @@
+#include "bag.h"
+#include <iostream>
+
+Bag::Bag()    // Constructor
+{
+   // set the initial state of the bag
+   count=0;
+}
+
+void Bag::clear()  // Clear the bag
+{
+   count=0;
+}
+
+bool Bag::insert(bag_type value) //Place a value in Bag
+{
+   bool reply;
+   if(count <20 ) {
+      data[count]=value;
+      reply=true;
+      count++;
+   } else {
+      reply=false;
+   }
+   return reply;
+}
+
+bool Bag::inbag(bag_type value)  // Is a value in the bag?
+{
+   bool reply=false;
+   int  index;
+   for(index=0;index<count&& !reply;index++)
+      if(data[index] == value) reply=true;
+   return reply;
+}
+
+int Bag::howmany(bag_type value) //How many of element;
+{
+   int thismany=0;
+   int index;
+   for(index=0;index<count;index++)
+      if(data[index]==value) thismany++;
+   return thismany;
+}
+
+bool Bag::remove(bag_type value)  // Remove a value
+{
+   bool reply=false;
+   int  index;
+   if(howmany(value) == 0) return reply;
+   reply=true;
+   index=0;
+   while(data[index] != value) index++;
+   for(;index<count;index++)
+      data[index]=data[index+1];
+   count--;
+}
+
+int Bag::size()    // How many elements in bag?
+{
+   return count;
+}

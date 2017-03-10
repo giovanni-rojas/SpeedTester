@@ -1,24 +1,34 @@
 #ifndef _BAG_
 #define _BAG_
 
-typedef  int bag_type;
+typedef int bag_type;
 
 class Bag {
 
 private:
-   int count;     // members in bag
-   bag_type *data;  //
+   int bagSize;     // members in bag
+   int arrayLength;
+   bag_type *bagArray;  //
 
+   int counter;
+   double nedges;
+   bool heap;
+   
 public:
-           Bag();             // Constructor
-   bool    insert(bag_type);  // Put a member in the bag
-   bool    remove(bag_type);  // remove a member from the bag
-   int     size();            // number of members in bag
-   void    clear();           // remove all members from bag
-   bool    inbag(bag_type);   // is a member in the bag?
-   int     howmany(bag_type); // how many member in bag.
-   void printBag();
-   void push(int vertex);
-   void pop(int vertex);
+   Bag();             // Constructor
+   int size(){return bagSize;}// number of members in bag
+   void clear();           // remove all members from bag
+   bool inBag(bag_type);   // is a member in the bag?
+   void printBag();        //print elements of bag        
+   void push(bag_type);  //push new member into queue
+   void pop();             //remove oldest queued member
+   int rootValue();
+   double getNedges(){ return nedges;}
+   void addEdge(){ nedges++;}
+   void minHeapify(int i);
+   void mergeBags(Bag *bag);
+   int elementAt(bag_type);
+   bool isEmpty(){return size() == 0;}
+   
 };
 #endif
