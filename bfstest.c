@@ -1,8 +1,6 @@
 // BFSTEST : Test breadth-first search in a graph.
 // 
 // example: cat sample.txt | ./bfstest 1
-//
-// John R. Gilbert, 17 Feb 2011
 
 #include <stdio.h>
 #include <stdlib.h>

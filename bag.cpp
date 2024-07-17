@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 
+
 Bag::Bag()    // Constructor
 {
    // set the initial state of the bag
