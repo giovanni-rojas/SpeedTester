@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Rout, Switch, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import axios from 'axios';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
 
   const submitSpeedTest = async () => {
     try {
-      await axios.post('/speedtest', {
+      await axios.post('http://localhost:5000/speedtest', {
         download_speed: downloadSpeed,
         upload_speed: uploadSpeed,
         notes,
@@ -38,12 +38,12 @@ function App() {
           <Link to="/login">Login</Link>
           <Link to="/register">Register</Link>
         </nav>
-        <Switch>
-          <Route path="/" exact>
-            <div>
+        <Routes>
+          <Route path="/" element={(
+              <div>
                 <h1>Run Speed Test</h1>
-                <button onClick={runSpeedTest}> Run Test</button>
-                {downloadSpeed && uploadSpeed (
+                <button onClick={runSpeedTest}>Run Test</button>
+                {downloadSpeed && uploadSpeed && (
                   <div>
                     <p>Download Speed: {downloadSpeed} Mbps</p>
                     <p>Upload Speed: {uploadSpeed} Mbps</p>
@@ -61,10 +61,10 @@ function App() {
                     )}
                   </div>
                 )}
-            </div>
-          </Route>
-          {/* Add routes for login and register */}
-        </Switch>
+              </div>
+            )} />
+            {/* Add routes for login and register */}
+        </Routes>
       </div>
     </Router>
   );
