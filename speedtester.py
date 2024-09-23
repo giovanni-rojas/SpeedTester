@@ -1976,6 +1976,12 @@ def shell():
     elif args.json:
         printer(results.json())
 
+    result = {
+        'download_speed': results.download / 1000.0 / 1000.0,
+        'upload_speed': results.download / 1000.0 / 1000.0,
+    }
+    print(json.dumps(result))
+
     if args.share and not machine_format:
         printer('Share results: %s' % results.share())
 
