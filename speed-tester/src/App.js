@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import axios from 'axios';
+import logo from './login.png';
 import './App.css';
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
         <nav className='navbar'>
           <Link to="/" className="title">Speedtester</Link>
           <div className='dropdown'>
-            <img src="../public/login.png" alt="Person Icon" className='person-icon' />
+            <img src= { logo } alt="Person Icon" className='person-icon' />
             <div className='dropdown-content'>
               <Link to="/login">Login</Link>
               <Link to="/register">Create Account</Link>
@@ -55,8 +56,9 @@ function App() {
         <Routes>
           <Route path="/" element={(
               <div className="speedtest-container">
-                <h1 className='title'>Run Speed Test</h1>
-                <button className='start-button' onClick={runSpeedTest}>Run Test</button>
+                <button className="start-button" onClick={runSpeedTest}>
+                  <span className="start-text">Run Test!</span>  {/* Wrap text in span */}
+                </button>
                 {downloadSpeed && uploadSpeed && ping && (
                   <div className='results'>
                     <p>Download Speed: {downloadSpeed} Mbps</p>

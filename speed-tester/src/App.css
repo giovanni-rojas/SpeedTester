@@ -3,20 +3,21 @@ body, html {
   margin: 0;
   font-family: Arial, sans-serif;
   background: linear-gradient(to right, #2C3E50, #4CA1AF);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .app {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 10px;
+  padding: 10px 20px;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: space-between;
@@ -28,6 +29,33 @@ body, html {
   color: white;
   font-size: 24px;
   text-decoration: none;
+  position: relative;
+  padding-left: 10px;
+  display: inline-block;
+  font-family: 'Monserrat', sans-serif;
+  letter-spacing: 1px;
+}
+
+.title:hover::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 10px;
+  width: calc(100% - 10px);
+  height: 2px;
+  background-color: white;
+  transition: width 0.3 ease;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 10px;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease;
 }
 
 .dropdown {
@@ -39,19 +67,26 @@ body, html {
   width: 40px;
   height: 40px;
   cursor: pointer;
+  border-radius: 50%;
+  background-color: white;
+  margin-right: 20px;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   padding: 10px;
   right: 0;
+  transition: all 0.5 ease;
+  transform: scaleY(0);
+  transform-origin: top;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
+  transform: scaleY(1);
 }
 
 .dropdown-content a {
@@ -67,28 +102,73 @@ body, html {
 
 .speedtest-container {
   margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .start-button {
   background-color: #2C3E50;
   color: white;
-  padding: 15px 30px;
+  width: 300px;
+  height: 300px;
   border: none;
-  border-radius: 50px;
-  font-size: 24px;
+  border-radius: 50%;
+  font-size: 30px;
   cursor: pointer;
   margin-top: 20px;
-  transition: background-color 0.3 ease;
+  transition: 0.3 ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  animation: breathing 1.5s ease-in-out infinite;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
 }
 
-.start-button:hover {
-  background-color: #34495E;
+.start-text {
+  position: relative;
+  display: inline-block;
+}
+
+.start-text::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.start-button:hover .start-text::after {
+  width: 100%;
+}
+
+@keyframes breathing {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  
 }
 
 .results {
   margin-top: 20px;
   font-size: 18px;
   color: white;
+  text-align: center;
 }
 
 .notes {
