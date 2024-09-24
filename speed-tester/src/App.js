@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import axios from 'axios';
+import './App.css';
 
 function App() {
   const [ token, setToken ] = useState(localStorage.getItem('token'));
@@ -40,30 +41,36 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
+      <div className="app">
+        <nav className='navbar'>
+          <Link to="/" className="title">Speedtester</Link>
+          <div className='dropdown'>
+            <img src="../public/login.png" alt="Person Icon" className='person-icon' />
+            <div className='dropdown-content'>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Create Account</Link>
+            </div>
+          </div>
         </nav>
         <Routes>
           <Route path="/" element={(
-              <div>
-                <h1>Run Speed Test</h1>
-                <button onClick={runSpeedTest}>Run Test</button>
+              <div className="speedtest-container">
+                <h1 className='title'>Run Speed Test</h1>
+                <button className='start-button' onClick={runSpeedTest}>Run Test</button>
                 {downloadSpeed && uploadSpeed && ping && (
-                  <div>
+                  <div className='results'>
                     <p>Download Speed: {downloadSpeed} Mbps</p>
                     <p>Upload Speed: {uploadSpeed} Mbps</p>
                     <p>Ping: {ping} ms</p>
                     {token ? (
                       <div>
                         <textarea
+                          className='notes'
                           placeholder='Add notes'
                           value={notes}
                           onChange={e => setNotes(e.target.value)}
                         />
-                        <button onClick={submitSpeedTest}>Submit Speed Test</button>
+                        <button onClick={submitSpeedTest} className='submit-button'>Submit Speed Test</button>
                       </div>
                     ) : (
                       <p>Login to save test results</p>
