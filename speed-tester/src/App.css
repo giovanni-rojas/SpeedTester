@@ -193,3 +193,26 @@ body, html {
 .submit-button:hover {
   background-color: #2980B9;
 }
+
+.progress-container {
+  width: 300px;
+  margin-top: 20px;
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: #3498db;
+  border-radius: 5px;
+  transition: width 0.1s ease;
+}
+
+.speed-display {
+  margin-top: 20px;
+  font-size: 18px;
+  color: white;
+  text-align: center;
+}
+
+.speed-display p {
+  margin: 5px 0;
+}

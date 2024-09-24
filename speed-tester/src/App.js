@@ -8,22 +8,64 @@ function App() {
   const [ token, setToken ] = useState(localStorage.getItem('token'));
   const [ downloadSpeed, setDownloadSpeed ] = useState(null);
   const [ uploadSpeed, setUploadSpeed ] = useState(null);
-  const [ ping, setPing ] = useState('');
+  const [ ping, setPing ] = useState(null);
   const [ notes, setNotes ] = useState('');
+  const [ testProgress, setTestProgress ] = useState(0);
+  const [ testRunning, setTestRunning ] = useState(false);
   
+
   const runSpeedTest = async () => {
+    setDownloadSpeed(null);
+    setUploadSpeed(null);
+    setPing(null);
+    setTestRunning(true);
+    setTestProgress(0);
+
+    const progressInterval = setInterval(() => {
+      setTestProgress(prev => (prev < 100 ? prev + 1 : prev));
+    }, 100);
+
     try {
       const response = await axios.get('http://localhost:5000/run-speedtest');
       const { download_speed, upload_speed, ping } = response.data;
-      setDownloadSpeed(download_speed);
-      setUploadSpeed(upload_speed)
-      setPing(ping);
+      setDownloadSpeed(download_speed.toFixed(2));
+      setUploadSpeed(upload_speed.toFixed(2));
+      setPing(ping.toFixed(1));
+
+      clearInterval(progressInterval);
+      setTestProgress(100);
+      setTestRunning(false)
+
     }
     catch (error) {
       console.error('Error running speed test:', error);
       alert('Failed to run speed test')
+      clearInterval(progressInterval);
+      setTestRunning(false);
     }
-  };
+
+    // const eventSource = new EventSource('http://localhost:5000/run-speedtest');
+
+    // eventSource.onmessage = (event) => {
+    //   const data = JSON.parse(event.data);
+    //   setTestProgress(data.progress);
+
+    //   if (data.results) {
+    //     setDownloadSpeed(data.results.download_speed.toFixed(2));
+    //     setUploadSpeed(data.results.upload_speed.toFixed(2));
+    //     setPing(data.results.ping.toFixed(1));
+    //     setTestProgress(false);
+    //     eventSource.close();
+    //   }
+    // };
+
+    // eventSource.onerror = (err) => {
+    //   console.error('Error running speed test:', err);
+    //   alert('Failed to run speed test');
+    //   setTestRunning(false);
+    //   eventSource.close();
+    // }
+  }
 
   const submitSpeedTest = async () => {
     try {
@@ -56,27 +98,26 @@ function App() {
         <Routes>
           <Route path="/" element={(
               <div className="speedtest-container">
-                <button className="start-button" onClick={runSpeedTest}>
-                  <span className="start-text">Run Test!</span>  {/* Wrap text in span */}
-                </button>
-                {downloadSpeed && uploadSpeed && ping && (
+                {!testRunning ? (
+                  <button className="start-button" onClick={runSpeedTest}>
+                    <span className="start-text">Run Test!</span>  {/* Wrap text in span */}
+                  </button>
+                ) : (
+                  <div className='progress-container'>
+                    <div className="progress-bar" style={{ width: `${testProgress}%` }}></div>
+                    <div className="speed-display">
+                      <p>Download Speed: {downloadSpeed ? `${downloadSpeed} Mbps` : 'Calculating...'}</p>
+                      <p>Upload Speed: {uploadSpeed ? `${uploadSpeed} Mbps` : 'Calculating...'}</p>
+                      <p>Ping: {ping ? `${ping} ms` : 'Calculating...'}</p>
+                    </div>
+                  </div>
+                )}
+                {!testRunning && downloadSpeed && uploadSpeed && ping && (
                   <div className='results'>
                     <p>Download Speed: {downloadSpeed} Mbps</p>
                     <p>Upload Speed: {uploadSpeed} Mbps</p>
-                    <p>Ping: {ping} ms</p>
-                    {token ? (
-                      <div>
-                        <textarea
-                          className='notes'
-                          placeholder='Add notes'
-                          value={notes}
-                          onChange={e => setNotes(e.target.value)}
-                        />
-                        <button onClick={submitSpeedTest} className='submit-button'>Submit Speed Test</button>
-                      </div>
-                    ) : (
-                      <p>Login to save test results</p>
-                    )}
+                    <p>Ping: {ping} ms</p> 
+                    <button className='submit-button' onClick={submitSpeedTest}>Submit</button>
                   </div>
                 )}
               </div>
