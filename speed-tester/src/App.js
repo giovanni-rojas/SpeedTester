@@ -21,16 +21,16 @@ function App() {
       setTestProgress( progress );
       switch (stage) {
         case 'config':
-          setCurrentStep('Getting home server details.');
-          break;
-        case 'server':
           setCurrentStep('Establishing connection to server.');
           break;
+        case 'server':
+          setCurrentStep('Running download test.');
+          break;
         case 'download':
-          setCurrentStep('Running speed test.');
+          setCurrentStep('Running upload test.');
           break;
         case 'upload':
-          setCurrentStep('Running speed test.');
+          setCurrentStep('Running upload test.');
           break;
         default:
           setCurrentStep('');
