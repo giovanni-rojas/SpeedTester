@@ -21,16 +21,16 @@ function App() {
       setTestProgress( progress );
       switch (stage) {
         case 'config':
-          setCurrentStep('Getting home server details');
+          setCurrentStep('Getting home server details.');
           break;
         case 'server':
-          setCurrentStep('Establishing connection to server');
+          setCurrentStep('Establishing connection to server.');
           break;
         case 'download':
-          setCurrentStep('Running speed test');
+          setCurrentStep('Running speed test.');
           break;
         case 'upload':
-          setCurrentStep('Running speed test');
+          setCurrentStep('Running speed test.');
           break;
         default:
           setCurrentStep('');
@@ -53,8 +53,8 @@ function App() {
     try {
       const response = await axios.get('http://localhost:5000/run-speedtest');
       const { download_speed, upload_speed, ping } = response.data;
-      setDownloadSpeed(download_speed.toFixed(2));
-      setUploadSpeed(upload_speed.toFixed(2));
+      setDownloadSpeed(download_speed.toFixed(1));
+      setUploadSpeed(upload_speed.toFixed(1));
       setPing(ping.toFixed(1));
 
       setTestRunning(false)
@@ -126,20 +126,30 @@ function App() {
                 </button>
               ) : (
                 <div className='progress-container'>
-                  <p key={currentStep} className="current-step ellipsis-slow">{currentStep}</p> {/* Updated: Added ellipsis class */}
+                  <div className='progress-background'></div>
+                  <p key={currentStep} className="current-step ellipsis-slow">{currentStep}</p>
                   <div className="progress-bar" style={{ width: `${testProgress}%` }}></div>
                   <div className="speed-display">
-                    <p className='ellipsis-fast'>Download Speed: {downloadSpeed ? `${downloadSpeed} Mbps` : 'Calculating'}</p>
-                    <p className='ellipsis-fast'>Upload Speed: {uploadSpeed ? `${uploadSpeed} Mbps` : 'Calculating'}</p>
-                    <p className='ellipsis-fast'>Ping: {ping ? `${ping} ms` : 'Calculating'}</p>
+                    <p className='ellipsis-fast'>Download Speed:{downloadSpeed ? `${downloadSpeed} Mbps` : ''}</p>
+                    <p className='ellipsis-fast'>Upload Speed:{uploadSpeed ? `${uploadSpeed} Mbps` : ''}</p>
+                    <p className='ellipsis-fast'>Ping:{ping ? `${ping} ms` : ''}</p>
                   </div>
                 </div>
               )}
               {!testRunning && downloadSpeed && uploadSpeed && ping && (
-                <div className="results">
-                  <p>Download Speed: {downloadSpeed} Mbps</p>
-                  <p>Upload Speed: {uploadSpeed} Mbps</p>
-                  <p>Ping: {ping} ms</p>
+                <div className="results-container">
+                  <div className='results-content'>
+                    <div className='results-values'>
+                      <div>{downloadSpeed}</div>
+                      <div>{uploadSpeed}</div>
+                      <div>{ping}</div>
+                    </div>
+                    <div className='results-labels'>
+                      <div className='download'>Mbps</div>
+                      <div className='upload'>Mbps</div>
+                      <div className='ping'>Ping</div>
+                    </div>
+                  </div>
                   <button className="submit-button" onClick={submitSpeedTest}>Submit Results</button>
                 </div>
               )}
