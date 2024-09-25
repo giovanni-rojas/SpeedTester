@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import axios from 'axios';
 import logo from './login.png';
@@ -13,6 +13,17 @@ function App() {
   const [ testProgress, setTestProgress ] = useState(0);
   const [ testRunning, setTestRunning ] = useState(false);
   
+  useEffect(() => {
+    const eventSource = new EventSource('http://localhost:5000/events');
+    eventSource.onmessage = (event) => {
+        const { stage, progress } = JSON.parse(event.data);
+        setTestProgress( progress );
+    };
+    return () => {
+      eventSource.close();
+    };
+  }, []);
+
 
   const runSpeedTest = async () => {
     setDownloadSpeed(null);
@@ -21,10 +32,6 @@ function App() {
     setTestRunning(true);
     setTestProgress(0);
 
-    const progressInterval = setInterval(() => {
-      setTestProgress(prev => (prev < 100 ? prev + 1 : prev));
-    }, 100);
-
     try {
       const response = await axios.get('http://localhost:5000/run-speedtest');
       const { download_speed, upload_speed, ping } = response.data;
@@ -32,15 +39,12 @@ function App() {
       setUploadSpeed(upload_speed.toFixed(2));
       setPing(ping.toFixed(1));
 
-      clearInterval(progressInterval);
-      setTestProgress(100);
       setTestRunning(false)
 
     }
     catch (error) {
       console.error('Error running speed test:', error);
       alert('Failed to run speed test')
-      clearInterval(progressInterval);
       setTestRunning(false);
     }
 
