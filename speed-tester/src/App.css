@@ -216,3 +216,113 @@ body, html {
 .speed-display p {
   margin: 5px 0;
 }
+
+.current-step {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2em;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.ellipsis-slow::after {
+  content: ''; /* Initial content */
+  display: inline-block;
+  width: 1em;
+  text-align: left;
+  animation: ellipsis-slow 50s infinite; /* Infinite animation with steps */
+}
+
+
+@keyframes ellipsis-slow {
+  0% {
+    content: '';
+  }
+  5% {
+    content: '.';
+  }
+  10% {
+    content: '..';
+  }
+  15% {
+    content: '...';
+  }
+  20% {
+    content: '....';
+  }
+  25% {
+    content: '.....';
+  }
+  30% {
+    content: '......';
+  }
+  35% {
+    content: '.......';
+  }
+  40% {
+    content: '........';
+  }
+  45% {
+    content: '.........';
+  }
+  50% {
+    content: '..........';
+  }
+  55% {
+    content: '...........';
+  }
+  60% {
+    content: '............';
+  }
+  65% {
+    content: '.............';
+  }
+  70% {
+    content: '..............';
+  }
+  75% {
+    content: '...............';
+  }
+  80% {
+    content: '................';
+  }
+  85% {
+    content: '.................';
+  }
+  90% {
+    content: '..................';
+  }
+  95% {
+    content: '...................';
+  }
+  100% {
+    content: '....................';
+  }
+}
+
+.ellipsis-fast::after {
+  content: ''; /* Initial content */
+  display: inline-block;
+  width: 1em;
+  text-align: left;
+  animation: ellipsis-fast 0.75s infinite;
+}
+
+@keyframes ellipsis-fast {
+  0% {
+    content: '';
+  }
+  25% {
+    content: '.';
+  }
+  50% {
+    content: '..';
+  }
+  75% {
+    content: '...';
+  }
+  100% {
+    content: '';
+  }
+}

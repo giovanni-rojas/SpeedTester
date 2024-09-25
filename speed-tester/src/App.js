@@ -12,12 +12,29 @@ function App() {
   const [ notes, setNotes ] = useState('');
   const [ testProgress, setTestProgress ] = useState(0);
   const [ testRunning, setTestRunning ] = useState(false);
+  const [ currentStep, setCurrentStep ] = useState('');
   
   useEffect(() => {
     const eventSource = new EventSource('http://localhost:5000/events');
     eventSource.onmessage = (event) => {
-        const { stage, progress } = JSON.parse(event.data);
-        setTestProgress( progress );
+      const { stage, progress } = JSON.parse(event.data);
+      setTestProgress( progress );
+      switch (stage) {
+        case 'config':
+          setCurrentStep('Getting home server details');
+          break;
+        case 'server':
+          setCurrentStep('Establishing connection to server');
+          break;
+        case 'download':
+          setCurrentStep('Running speed test');
+          break;
+        case 'upload':
+          setCurrentStep('Running speed test');
+          break;
+        default:
+          setCurrentStep('');
+      }
     };
     return () => {
       eventSource.close();
@@ -31,6 +48,7 @@ function App() {
     setPing(null);
     setTestRunning(true);
     setTestProgress(0);
+    setCurrentStep('');
 
     try {
       const response = await axios.get('http://localhost:5000/run-speedtest');
@@ -92,7 +110,7 @@ function App() {
         <nav className='navbar'>
           <Link to="/" className="title">Speedtester</Link>
           <div className='dropdown'>
-            <img src= { logo } alt="Person Icon" className='person-icon' />
+            <img src={logo} alt="Person Icon" className='person-icon' />
             <div className='dropdown-content'>
               <Link to="/login">Login</Link>
               <Link to="/register">Create Account</Link>
@@ -101,32 +119,33 @@ function App() {
         </nav>
         <Routes>
           <Route path="/" element={(
-              <div className="speedtest-container">
-                {!testRunning ? (
-                  <button className="start-button" onClick={runSpeedTest}>
-                    <span className="start-text">Run Test!</span>  {/* Wrap text in span */}
-                  </button>
-                ) : (
-                  <div className='progress-container'>
-                    <div className="progress-bar" style={{ width: `${testProgress}%` }}></div>
-                    <div className="speed-display">
-                      <p>Download Speed: {downloadSpeed ? `${downloadSpeed} Mbps` : 'Calculating...'}</p>
-                      <p>Upload Speed: {uploadSpeed ? `${uploadSpeed} Mbps` : 'Calculating...'}</p>
-                      <p>Ping: {ping ? `${ping} ms` : 'Calculating...'}</p>
-                    </div>
+            <div className="speedtest-container">
+              {!testRunning ? (
+                <button className="start-button" onClick={runSpeedTest}>
+                  <span className="start-text">Run Test!</span>
+                </button>
+              ) : (
+                <div className='progress-container'>
+                  <p key={currentStep} className="current-step ellipsis-slow">{currentStep}</p> {/* Updated: Added ellipsis class */}
+                  <div className="progress-bar" style={{ width: `${testProgress}%` }}></div>
+                  <div className="speed-display">
+                    <p className='ellipsis-fast'>Download Speed: {downloadSpeed ? `${downloadSpeed} Mbps` : 'Calculating'}</p>
+                    <p className='ellipsis-fast'>Upload Speed: {uploadSpeed ? `${uploadSpeed} Mbps` : 'Calculating'}</p>
+                    <p className='ellipsis-fast'>Ping: {ping ? `${ping} ms` : 'Calculating'}</p>
                   </div>
-                )}
-                {!testRunning && downloadSpeed && uploadSpeed && ping && (
-                  <div className='results'>
-                    <p>Download Speed: {downloadSpeed} Mbps</p>
-                    <p>Upload Speed: {uploadSpeed} Mbps</p>
-                    <p>Ping: {ping} ms</p> 
-                    <button className='submit-button' onClick={submitSpeedTest}>Submit</button>
-                  </div>
-                )}
-              </div>
-            )} />
-            {/* Add routes for login and register */}
+                </div>
+              )}
+              {!testRunning && downloadSpeed && uploadSpeed && ping && (
+                <div className="results">
+                  <p>Download Speed: {downloadSpeed} Mbps</p>
+                  <p>Upload Speed: {uploadSpeed} Mbps</p>
+                  <p>Ping: {ping} ms</p>
+                  <button className="submit-button" onClick={submitSpeedTest}>Submit Results</button>
+                </div>
+              )}
+            </div>
+          )} />
+          {/* Add routes for login and register */}
         </Routes>
       </div>
     </Router>
