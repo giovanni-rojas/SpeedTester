@@ -108,7 +108,12 @@ function App() {
     <Router>
       <div className="app">
         <nav className='navbar'>
-          <Link to="/" className="title">Speedtester</Link>
+          <div className='left-navbar'>
+            <a href="/" className="navbar-link">
+              <img src="speedtester-logo.jpg" alt="Logo" className="navbar-logo"/>
+              <span className="title navbar-title">Speedtester</span>
+            </a>
+          </div>
           <div className='dropdown'>
             <img src={logo} alt="Person Icon" className='person-icon' />
             <div className='dropdown-content'>
