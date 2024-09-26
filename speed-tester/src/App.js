@@ -13,8 +13,21 @@ function App() {
   const [ testProgress, setTestProgress ] = useState(0);
   const [ testRunning, setTestRunning ] = useState(false);
   const [ currentStep, setCurrentStep ] = useState('');
+  const [ serverInfo, setServerInfo ] = useState(null);
   
   useEffect(() => {
+
+    const fetchServerInfo = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/server-info');
+        setServerInfo(response.data);
+      } catch (err) {
+        console.error('Error fetching server info:', err);
+      }
+    };
+
+    fetchServerInfo();
+
     const eventSource = new EventSource('http://localhost:5000/events');
     eventSource.onmessage = (event) => {
       const { stage, progress } = JSON.parse(event.data);
@@ -156,6 +169,18 @@ function App() {
                     </div>
                   </div>
                   <button className="submit-button" onClick={submitSpeedTest}>Submit Results</button>
+                </div>
+              )}
+              {serverInfo && ( 
+                <div className='info-container'>
+                  <div className='isp-info'>
+                    <p>{serverInfo.isp}</p>
+                    <p>{serverInfo.asn}</p>
+                  </div>
+                  <div className='server-info'>
+                    <p>{serverInfo.server.sponsor}</p>
+                    <p>{serverInfo.server.location}</p>
+                  </div>
                 </div>
               )}
             </div>

@@ -431,3 +431,24 @@ body, html {
 .ping {
   color: rgb(190, 187, 28);
 }
+
+.info-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.isp-info, .server-info {
+  flex: 1;
+  text-align: left;
+  padding: 10px;
+}
+
+.isp-info p, .server-info p {
+  margin: 5px 0;
+  font-size: 16px;
+}
