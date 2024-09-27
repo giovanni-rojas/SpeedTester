@@ -130,8 +130,9 @@ function App() {
           <div className='dropdown'>
             <img src={logo} alt="Person Icon" className='person-icon' />
             <div className='dropdown-content'>
-              <Link to="/login">Login</Link>
-              <Link to="/register">Create Account</Link>
+              <a href="/">Login (Coming Soon)</a>
+              <a href="https://github.com/giovanni-rojas/SpeedTester" target="_blank" rel="noopener noreferrer">See Code</a>
+              <a href="https://giovanni-rojas.github.io/" target="_blank" rel="noopener noreferrer">About Author</a>
             </div>
           </div>
         </nav>
@@ -168,18 +169,27 @@ function App() {
                       <div className='ping'>Ping</div>
                     </div>
                   </div>
-                  <button className="submit-button" onClick={submitSpeedTest}>Submit Results</button>
                 </div>
               )}
               {serverInfo && ( 
                 <div className='info-container'>
                   <div className='isp-info'>
-                    <p>{serverInfo.isp}</p>
-                    <p>{serverInfo.asn}</p>
+                    <div className='icon-text'>
+                      <p className='name'>{serverInfo.isp}</p>
+                      <p className='location'>{serverInfo.location}</p>
+                    </div>
+                    <img src="wifi.jpg" alt="Wifi Icon" className='icon'/>
+                  </div>
+                  <div className='arrows'>
+                    <div className='arrow'>&#8594;</div>
+                    <div className='arrow'>&#8592;</div>
                   </div>
                   <div className='server-info'>
-                    <p>{serverInfo.server.sponsor}</p>
-                    <p>{serverInfo.server.location}</p>
+                    <img src="server.jpg" alt="Server Icon" className='icon'/>
+                    <div className='icon-text'>
+                      <p className='name'>{serverInfo.server.sponsor}</p>
+                      <p className='location'>{serverInfo.server.location}</p>
+                    </div>
                   </div>
                 </div>
               )}
@@ -187,6 +197,9 @@ function App() {
           )} />
           {/* Add routes for login and register */}
         </Routes>
+        <footer className='footer'>
+          <p>Compare to results on <a href='https://www.speedtest.net/' target="_blank" rel="noopener noreferrer">speedtest.net</a>!</p>
+        </footer>
       </div>
     </Router>
   );
