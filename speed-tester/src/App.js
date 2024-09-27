@@ -117,6 +117,15 @@ function App() {
     }
   }
 
+  const handleLoginClick = (event) => {
+    event.preventDefault();
+    const link = event.target;
+    link.classList.add('animate');
+    setTimeout(() => {
+      link.classList.remove('animate');
+    }, 300); // Duration of the animation
+  };
+
   return (
     <Router>
       <div className="app">
@@ -130,7 +139,7 @@ function App() {
           <div className='dropdown'>
             <img src={logo} alt="Person Icon" className='person-icon' />
             <div className='dropdown-content'>
-              <a href="/">Login (Coming Soon)</a>
+              <a href="#" className='login-link' onClick={handleLoginClick}>Login (Coming Soon)</a>
               <a href="https://github.com/giovanni-rojas/SpeedTester" target="_blank" rel="noopener noreferrer">See Code</a>
               <a href="https://giovanni-rojas.github.io/" target="_blank" rel="noopener noreferrer">About Author</a>
             </div>

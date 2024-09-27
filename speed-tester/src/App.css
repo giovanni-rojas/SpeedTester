@@ -104,10 +104,22 @@ body, html {
   padding: 10px;
   text-decoration: none;
   display: block;
+  transition: all 0.3s ease;
 }
 
 .dropdown-content a:hover {
   background-color: #ddd;
+}
+
+.dropdown-content a.login-link {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-content a.login-link.animate {
+  transform: scale(1.2);
+  color: red;
 }
 
 .speedtest-container {
