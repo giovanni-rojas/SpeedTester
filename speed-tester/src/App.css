@@ -17,7 +17,7 @@ body, html {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 10px 20px;
+  padding: 15px 25px;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: space-between;
@@ -31,13 +31,13 @@ body, html {
 }
 
 .navbar-logo {
-  height: 40px;
+  height: 50px;
   border-radius: 50%;
 }
 
 .title {
   color: white;
-  font-size: 24px;
+  font-size: 30px;
   text-decoration: none;
   position: relative;
   display: inline-block;
@@ -73,12 +73,12 @@ body, html {
 }
 
 .person-icon {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
   border-radius: 50%;
   background-color: white;
-  margin-right: 20px;
+  margin-right: 25px;
 }
 
 .dropdown-content {
@@ -86,12 +86,12 @@ body, html {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  padding: 10px;
+  padding: 15px;
   right: 0;
   transition: all 0.5 ease;
   transform: scaleY(0);
   transform-origin: top;
-  min-width: 175px;
+  min-width: 200px;
 }
 
 .dropdown:hover .dropdown-content {
@@ -101,7 +101,7 @@ body, html {
 
 .dropdown-content a {
   color: black;
-  padding: 10px;
+  padding: 15px;
   text-decoration: none;
   display: block;
   transition: all 0.3s ease;
@@ -123,7 +123,7 @@ body, html {
 }
 
 .speedtest-container {
-  margin-top: 100px;
+  margin-top: 120px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -133,13 +133,13 @@ body, html {
 .start-button {
   background-color: #2C3E50;
   color: white;
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
   border: none;
   border-radius: 50%;
-  font-size: 30px;
+  font-size: 35px;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 25px;
   transition: 0.3 ease-in-out;
   display: flex;
   justify-content: center;
@@ -187,8 +187,8 @@ body, html {
 }
 
 .results {
-  margin-top: 20px;
-  font-size: 18px;
+  margin-top: 25px;
+  font-size: 20px;
   color: white;
   text-align: center;
 }
@@ -217,13 +217,13 @@ body, html {
 }
 
 .progress-container {
-  width: 300px;
-  margin-top: 20px;
+  width: 350px;
+  margin-top: 25px;
   position: relative;
 }
 
 .progress-background {
-  height: 10px;
+  height: 12px;
   background-color: #ccc;
   border-radius: 5px;
   width: 100%;
@@ -233,7 +233,7 @@ body, html {
 }
 
 .progress-bar {
-  height: 10px;
+  height: 12px;
   background-color: #3498db;
   border-radius: 5px;
   transition: width 0.1s ease;
@@ -243,21 +243,21 @@ body, html {
 }
 
 .speed-display {
-  margin-top: 20px;
-  font-size: 18px;
+  margin-top: 25px;
+  font-size: 20px;
   color: white;
   text-align: center;
 }
 
 .speed-display p {
-  margin: 5px 0;
+  margin: 10px 0;
 }
 
 .current-step {
   font-family: 'Roboto', sans-serif;
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   color: #333;
   white-space: nowrap;
 }
@@ -364,8 +364,8 @@ body, html {
 }
 
 .results-container {
-  margin-top: 20px;
-  padding: 20px;
+  margin-top: 25px;
+  padding: 25px;
   width: 100%;
   border: 2px solid #4CAF50;
   border-radius: 10px;
@@ -390,7 +390,7 @@ body, html {
 }
 
 .results-title {
-  font-size: 0.8em;
+  font-size: 1em;
   text-align: center;
   text-decoration: underline;
   margin-bottom: 10px;
@@ -399,7 +399,7 @@ body, html {
 .results-content {
   box-shadow: 2.5px 2.5px 6px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
-  padding: 10px;
+  padding: 15px;
   background-color: rgba(255, 255, 255, 0.9);
 }
 
@@ -415,13 +415,13 @@ body, html {
 }
 
 .results-values {
-  font-size: 2em;
+  font-size: 2.2em;
   font-weight: bold;
 }
 
 .results-labels {
   font-family: 'Roboto', sans-serif;
-  font-size: 1.1em;
+  font-size: 1.2em;
   font-weight: bold;
 }
 
@@ -448,8 +448,8 @@ body, html {
 .info-container {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
-  padding: 20px;
+  margin-top: 25px;
+  padding: 25px;
   width: 100%;
 }
 
@@ -481,20 +481,20 @@ body, html {
 }
 
 .name {
-  font-size: 1.2em;
+  font-size: 1.4em;
   color: #ffffff;
 }
 
 .location {
-  font-size: 0.8em;
+  font-size: 1em;
   color: #aeaeae;
 }
 
 .icon {
-  margin: 0 10px;
+  margin: 0 15px;
   width: auto;
   height: 100%;
-  max-height: 40px;
+  max-height: 50px;
   border-radius: 50%;
 }
 
@@ -505,14 +505,14 @@ body, html {
 }
 
 .arrow {
-  font-size: 1.5em;
+  font-size: 1.7em;
   color: #32CD32;
   font-weight: 600;
 }
 
 .footer {
   font-family: 'Courier Prime', monospace;
-  font-size: 1em;
+  font-size: 1.2em;
   color: white;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.3);

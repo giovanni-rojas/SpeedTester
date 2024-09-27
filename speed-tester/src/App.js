@@ -14,6 +14,7 @@ function App() {
   const [ testRunning, setTestRunning ] = useState(false);
   const [ currentStep, setCurrentStep ] = useState('');
   const [ serverInfo, setServerInfo ] = useState(null);
+  const [ loading, setLoading ] = useState(true);
   
   useEffect(() => {
 
@@ -21,8 +22,10 @@ function App() {
       try {
         const response = await axios.get('http://localhost:5000/server-info');
         setServerInfo(response.data);
+        setLoading(false);
       } catch (err) {
         console.error('Error fetching server info:', err);
+        setLoading(false)
       }
     };
 
@@ -180,7 +183,7 @@ function App() {
                   </div>
                 </div>
               )}
-              {serverInfo && ( 
+              {!loading && serverInfo && ( 
                 <div className='info-container'>
                   <div className='isp-info'>
                     <div className='icon-text'>
