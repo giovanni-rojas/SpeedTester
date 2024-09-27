@@ -132,85 +132,134 @@ function App() {
   return (
     <Router>
       <div className="app">
-        <nav className='navbar'>
-          <div className='left-navbar'>
+        <nav className="navbar">
+          <div className="left-navbar">
             <a href="/" className="navbar-link">
-              <img src="speedtester-logo.jpg" alt="Logo" className="navbar-logo"/>
+              <img src="speedtester-round.png" alt="Logo" className="navbar-logo" />
               <span className="title navbar-title">Speedtester</span>
             </a>
           </div>
-          <div className='dropdown'>
-            <img src={logo} alt="Person Icon" className='person-icon' />
-            <div className='dropdown-content'>
-              <a href="#" className='login-link' onClick={handleLoginClick}>Login (Coming Soon)</a>
-              <a href="https://github.com/giovanni-rojas/SpeedTester" target="_blank" rel="noopener noreferrer">See Code</a>
-              <a href="https://giovanni-rojas.github.io/" target="_blank" rel="noopener noreferrer">About Author</a>
+          <div className="dropdown">
+            <img src={logo} alt="Person Icon" className="person-icon" />
+            <div className="dropdown-content">
+              <a href="#" className="login-link" onClick={handleLoginClick}>
+                Login (Coming Soon)
+              </a>
+              <a href="https://github.com/giovanni-rojas/SpeedTester" target="_blank" rel="noopener noreferrer">
+                See Code
+              </a>
+              <a href="https://giovanni-rojas.github.io/" target="_blank" rel="noopener noreferrer">
+                About
+              </a>
             </div>
           </div>
         </nav>
         <Routes>
-          <Route path="/" element={(
-            <div className="speedtest-container">
-              {!testRunning ? (
-                <button className="start-button" onClick={runSpeedTest}>
-                  <span className="start-text">Run Test!</span>
-                </button>
-              ) : (
-                <div className='progress-container'>
-                  <div className='progress-background'></div>
-                  <p key={currentStep} className="current-step ellipsis-slow">{currentStep}</p>
-                  <div className="progress-bar" style={{ width: `${testProgress}%` }}></div>
-                  <div className="speed-display">
-                    <p className='ellipsis-fast'>Download Speed:{downloadSpeed ? `${downloadSpeed} Mbps` : ''}</p>
-                    <p className='ellipsis-fast'>Upload Speed:{uploadSpeed ? `${uploadSpeed} Mbps` : ''}</p>
-                    <p className='ellipsis-fast'>Ping:{ping ? `${ping} ms` : ''}</p>
-                  </div>
-                </div>
-              )}
-              {!testRunning && downloadSpeed && uploadSpeed && ping && (
-                <div className="results-container">
-                  <div className='results-content'>
-                    <div className='results-values'>
-                      <div>{downloadSpeed}</div>
-                      <div>{uploadSpeed}</div>
-                      <div>{ping}</div>
+          <Route
+            path="/"
+            element={
+              <div className="speedtest-container">
+                {!testRunning ? (
+                  <>
+                    <button className="start-button" onClick={runSpeedTest}>
+                      <span className="start-text">Run Test!</span>
+                    </button>
+                    {!loading && serverInfo && (
+                      <div className="info-container">
+                        <div className="isp-info">
+                          <div className="icon-text">
+                            <p className="name">{serverInfo.isp}</p>
+                            <p className="location">{serverInfo.location}</p>
+                          </div>
+                          <img src="wifi.jpg" alt="Wifi Icon" className="icon" />
+                        </div>
+                        <div className="arrows">
+                          <div className="arrow">&#8594;</div>
+                          <div className="arrow">&#8592;</div>
+                        </div>
+                        <div className="server-info">
+                          <img src="server-round.png" alt="Server Icon" className="icon" />
+                          <div className="icon-text">
+                            <p className="name">{serverInfo.server.sponsor}</p>
+                            <p className="location">{serverInfo.server.location}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="progress-container">
+                    <div className="progress-background"></div>
+                    <p key={currentStep} className="current-step ellipsis-slow">
+                      {currentStep}
+                    </p>
+                    <div className="progress-bar" style={{ width: `${testProgress}%` }}></div>
+                    {!loading && serverInfo && (
+                      <div className="info-wrapper">
+                        <div className="info-container centered">
+                          <div className="isp-info">
+                            <div className="icon-text">
+                              <p className="name">{serverInfo.isp}</p>
+                              <p className="location">{serverInfo.location}</p>
+                            </div>
+                            <img src="wifi.jpg" alt="Wifi Icon" className="icon" />
+                          </div>
+                          <div className="arrows">
+                            <div className="arrow">&#8594;</div>
+                            <div className="arrow">&#8592;</div>
+                          </div>
+                          <div className="server-info">
+                            <img src="server-round.png" alt="Server Icon" className="icon" />
+                            <div className="icon-text">
+                              <p className="name">{serverInfo.server.sponsor}</p>
+                              <p className="location">{serverInfo.server.location}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <div className="speed-display">
+                      <p className="ellipsis-fast">
+                        Download Speed:{downloadSpeed ? `${downloadSpeed} Mbps` : ''}
+                      </p>
+                      <p className="ellipsis-fast">
+                        Upload Speed:{uploadSpeed ? `${uploadSpeed} Mbps` : ''}
+                      </p>
+                      <p className="ellipsis-fast">Ping:{ping ? `${ping} ms` : ''}</p>
                     </div>
-                    <div className='results-labels'>
-                      <div className='download'>Mbps</div>
-                      <div className='upload'>Mbps</div>
-                      <div className='ping'>Ping</div>
+                  </div>
+                )}
+                {!testRunning && downloadSpeed && uploadSpeed && ping && (
+                  <>
+                    <div className="results-container">
+                      <div className="results-content">
+                        <div className="results-values">
+                          <div>{downloadSpeed}</div>
+                          <div>{uploadSpeed}</div>
+                          <div>{ping}</div>
+                        </div>
+                        <div className="results-labels">
+                          <div className="download">Mbps</div>
+                          <div className="upload">Mbps</div>
+                          <div className="ping">Ping</div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              )}
-              {!loading && serverInfo && ( 
-                <div className='info-container'>
-                  <div className='isp-info'>
-                    <div className='icon-text'>
-                      <p className='name'>{serverInfo.isp}</p>
-                      <p className='location'>{serverInfo.location}</p>
-                    </div>
-                    <img src="wifi.jpg" alt="Wifi Icon" className='icon'/>
-                  </div>
-                  <div className='arrows'>
-                    <div className='arrow'>&#8594;</div>
-                    <div className='arrow'>&#8592;</div>
-                  </div>
-                  <div className='server-info'>
-                    <img src="server.jpg" alt="Server Icon" className='icon'/>
-                    <div className='icon-text'>
-                      <p className='name'>{serverInfo.server.sponsor}</p>
-                      <p className='location'>{serverInfo.server.location}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          )} />
+                  </>
+                )}
+              </div>
+            }
+          />
           {/* Add routes for login and register */}
         </Routes>
-        <footer className='footer'>
-          <p>Compare to results on <a href='https://www.speedtest.net/' target="_blank" rel="noopener noreferrer">speedtest.net</a>!</p>
+        <footer className="footer">
+          <p>
+            Compare to results on{' '}
+            <a href="https://www.speedtest.net/" target="_blank" rel="noopener noreferrer">
+              speedtest.net
+            </a>
+            !
+          </p>
         </footer>
       </div>
     </Router>

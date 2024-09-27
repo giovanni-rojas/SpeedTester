@@ -33,6 +33,11 @@ body, html {
 .navbar-logo {
   height: 50px;
   border-radius: 50%;
+  padding-right: 6px;
+}
+
+.speedtester-icon {
+  border-radius: 50%;
 }
 
 .title {
@@ -220,6 +225,9 @@ body, html {
   width: 350px;
   margin-top: 25px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .progress-background {
@@ -364,7 +372,6 @@ body, html {
 }
 
 .results-container {
-  margin-top: 25px;
   padding: 25px;
   width: 100%;
   border: 2px solid #4CAF50;
@@ -389,17 +396,10 @@ body, html {
   }
 }
 
-.results-title {
-  font-size: 1em;
-  text-align: center;
-  text-decoration: underline;
-  margin-bottom: 10px;
-}
-
 .results-content {
   box-shadow: 2.5px 2.5px 6px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
-  padding: 15px;
+  padding: 7.5px 15px;
   background-color: rgba(255, 255, 255, 0.9);
 }
 
@@ -445,17 +445,31 @@ body, html {
   color: rgb(190, 187, 28);
 }
 
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* .info-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+} */
+
 .info-container {
   display: flex;
   justify-content: space-between;
-  margin-top: 25px;
+  margin-top: 5px;
   padding: 25px;
-  width: 100%;
 }
 
 .isp-info, .server-info {
   display: flex;
   align-items: center;
+  flex: 1;
+  white-space: nowrap;
 }
 
 .isp-info {
