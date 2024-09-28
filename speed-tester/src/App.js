@@ -20,7 +20,7 @@ function App() {
 
     const fetchServerInfo = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/server-info');
+        const response = await axios.get('https://polar-shore-47076-dff09794a022.herokuapp.com/server-info');
         setServerInfo(response.data);
         setLoading(false);
       } catch (err) {
@@ -31,7 +31,7 @@ function App() {
 
     fetchServerInfo();
 
-    const eventSource = new EventSource('http://localhost:5000/events');
+    const eventSource = new EventSource('https://polar-shore-47076-dff09794a022.herokuapp.com/events');
     eventSource.onmessage = (event) => {
       const { stage, progress } = JSON.parse(event.data);
       setTestProgress( progress );
@@ -67,7 +67,7 @@ function App() {
     setCurrentStep('');
 
     try {
-      const response = await axios.get('http://localhost:5000/run-speedtest');
+      const response = await axios.get('https://polar-shore-47076-dff09794a022.herokuapp.com/run-speedtest');
       const { download_speed, upload_speed, ping } = response.data;
       setDownloadSpeed(download_speed.toFixed(1));
       setUploadSpeed(upload_speed.toFixed(1));
@@ -107,7 +107,7 @@ function App() {
 
   const submitSpeedTest = async () => {
     try {
-      await axios.post('http://localhost:5000/speedtest', {
+      await axios.post('https://polar-shore-47076-dff09794a022.herokuapp.com/speedtest', {
         download_speed: downloadSpeed,
         upload_speed: uploadSpeed,
         notes,
