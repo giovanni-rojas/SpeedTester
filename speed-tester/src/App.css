@@ -445,31 +445,34 @@ body, html {
   color: rgb(190, 187, 28);
 }
 
+
+.info-wrapper {
+  display: flex;
+  flex: 1;
+}
+
+.info-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  padding: 25px;
+  flex-shrink: 1;
+  white-space: nowrap;
+}
+
 .centered {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
 }
 
-/* .info-wrapper {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-} */
-
-.info-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 5px;
-  padding: 25px;
-}
 
 .isp-info, .server-info {
   display: flex;
   align-items: center;
   flex: 1;
   white-space: nowrap;
+  flex-shrink: 1;
 }
 
 .isp-info {
