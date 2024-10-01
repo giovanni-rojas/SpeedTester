@@ -15,12 +15,14 @@ function App() {
   const [ currentStep, setCurrentStep ] = useState('');
   const [ serverInfo, setServerInfo ] = useState(null);
   const [ loading, setLoading ] = useState(true);
+
+  const apiUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
   
   useEffect(() => {
 
     const fetchServerInfo = async () => {
       try {
-        const response = await axios.get('https://polar-shore-47076-dff09794a022.herokuapp.com/server-info');
+        const response = await axios.get(`${apiUrl}/server-info`);
         console.log("server info fine");
         setServerInfo(response.data);
         setLoading(false);
@@ -32,7 +34,7 @@ function App() {
 
     fetchServerInfo();
 
-    const eventSource = new EventSource('https://polar-shore-47076-dff09794a022.herokuapp.com/events');
+    const eventSource = new EventSource(`${apiUrl}/events`);
     console.log("event source fine");
     eventSource.onmessage = (event) => {
       const { stage, progress } = JSON.parse(event.data);
@@ -57,7 +59,7 @@ function App() {
     return () => {
       eventSource.close();
     };
-  }, ['https://polar-shore-47076-dff09794a022.herokuapp.com']);
+  }, [apiUrl]);
 
 
   const runSpeedTest = async () => {
@@ -132,7 +134,7 @@ function App() {
   };
 
   return (
-    <Router>
+    <Router basename="/SpeedTester">
       <div className="app">
         <nav className="navbar">
           <div className="left-navbar">
