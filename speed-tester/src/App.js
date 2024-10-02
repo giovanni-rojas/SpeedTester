@@ -18,57 +18,57 @@ function App() {
   const apiUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
   
   async function getServers() {
-    // const urls = [
-    //   'https://speedtest.net/speedtest-servers-static.php',
-    //   'https://c.speedtest.net/speedtest-servers-static.php',
-    //   'https://speedtest.net/speedtest-servers.php',
-    //   'https://c.speedtest.net/speedtest-servers.php'
-    // ];
-    try {
-      const response = await axios.get(`${apiUrl}/get-servers`);
+    const urls = [
+      'https://speedtest.net/speedtest-servers-static.php',
+      'https://c.speedtest.net/speedtest-servers-static.php',
+      'https://speedtest.net/speedtest-servers.php',
+      'https://c.speedtest.net/speedtest-servers.php'
+    ];
 
-      const parser = new XMLParser();
-      const servers = parser.parse(response.data);
-      return servers.settings.servers.server.map(s => s.$);
-    } catch (err) {
-      console.error(`Error fetching servers in getServer() frontend`, err);
+    const parser = new XMLParser();
+
+    for (const url of urls) {
+      try {
+        const response = await axios.get(url);
+        const servers = parser.parse(response.data);
+        return servers.settings.servers.server.map(s => s.$);
+      } catch (err) {
+        console.error(`Error fetching servers from ${url}:`, err);
+      }
       throw new Error('Failed to fetch servers');
     }
-
   }
 
   useEffect(() => {
-
     const fetchServerInfo = async () => {
       try {
         // Fetch user's IP address
-        const ipResponse = await axios.get(`${apiUrl}/get-ip`); // Updated line
-        const userIp = ipResponse.data.ip; // Added line
+        const ipResponse = await axios.get('https://api.ipify.org?format=json');
+        const userIp = ipResponse.data.ip;
 
         const servers = await getServers();
-        console.log('Fetched Servers new buildd:', servers);
+        console.log('Fetched Servers new build:', servers);
 
         // Send IP address to backend to fetch server info
-        const response = await axios.get(`${apiUrl}/server-info`, { // Updated line
-          params: { ip: userIp },
-          data: { servers: servers }
+        const response = await axios.get(`${apiUrl}/server-info`, {
+          params: { ip: userIp, servers: JSON.stringify(servers) }
         });
-        console.log('Server Info Response:', response.data); // Added line
+        console.log('Server Info Response:', response.data);
         setServerInfo(response.data);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching server info:', err);
-        setLoading(false)
+        setLoading(false);
       }
     };
 
     fetchServerInfo();
 
     const ws = new WebSocket(`${apiUrl.replace(/^http/, 'ws')}/events`);
-    console.log("WebSocket connection established???");
+    console.log("WebSocket connection established??");
     ws.onmessage = (event) => {
       const { stage, progress } = JSON.parse(event.data);
-      setTestProgress( progress );
+      setTestProgress(progress);
       switch (stage) {
         case 'config':
           setCurrentStep('Establishing connection to server.');
@@ -91,7 +91,6 @@ function App() {
     };
   }, [apiUrl]);
 
-
   const runSpeedTest = async () => {
     setDownloadSpeed(null);
     setUploadSpeed(null);
@@ -107,16 +106,13 @@ function App() {
       setUploadSpeed(upload_speed.toFixed(1));
       setPing(ping.toFixed(1));
 
-      setTestRunning(false)
-
-    }
-    catch (error) {
+      setTestRunning(false);
+    } catch (error) {
       console.error('Error running speed test:', error);
-      alert('Failed to run speed test')
+      alert('Failed to run speed test');
       setTestRunning(false);
     }
-
-  }
+  };
 
   const handleLoginClick = (event) => {
     event.preventDefault();
