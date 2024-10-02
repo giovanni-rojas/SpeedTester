@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import axios from 'axios';
-import xml2js from 'xml2js';
+import { XMLParser } from 'fast-xml-parser';
 import logo from './login.png';
 import './App.css';
 
@@ -25,11 +25,13 @@ function App() {
       'http://c.speedtest.net/speedtest-servers.php'
     ];
 
+    const parser = new XMLParser();
+
     for (const url of urls) {
       try {
         const response = await axios.get(url);
-        const servers = await xml2js.parseStringPromise(response.data);
-        return servers.settings.servers[0].server.map(s => s.$);
+        const servers = parser.parse(response.data);
+        return servers.settings.servers.server.map(s => s.$);
       } catch (err) {
         console.error(`Error fetching servers from ${url}:`, err);
       }
@@ -43,11 +45,14 @@ function App() {
         // Fetch user's IP address
         const ipResponse = await axios.get('https://api.ipify.org?format=json'); // Added line
         const userIp = ipResponse.data.ip; // Added line
-        console.log('User IP:', userIp, "in frontend");
+
+        const servers = await getServers();
+        console.log('Fetched Servers:', servers);
 
         // Send IP address to backend to fetch server info
         const response = await axios.get(`${apiUrl}/server-info`, { // Updated line
-          params: { ip: userIp } // Added line
+          ip: userIp, // Added line
+          servers: servers
         });
         console.log('Server Info Response:', response.data); // Added line
         setServerInfo(response.data);
