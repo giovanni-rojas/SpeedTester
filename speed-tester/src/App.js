@@ -47,7 +47,7 @@ function App() {
         const userIp = ipResponse.data.ip;
 
         const servers = await getServers();
-        console.log('Fetched Servers new build:', servers);
+        console.log('Fetched Servers new builddd:', servers);
 
         // Send IP address to backend to fetch server info
         const response = await axios.get(`${apiUrl}/server-info`, {
