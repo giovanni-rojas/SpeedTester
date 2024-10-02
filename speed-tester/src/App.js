@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import axios from 'axios';
+import xml2js from 'xml2js';
 import logo from './login.png';
 import './App.css';
 
@@ -16,6 +17,25 @@ function App() {
 
   const apiUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
   
+  async function getServers() {
+    const urls = [
+      'http://speedtest.net/speedtest-servers-static.php',
+      'http://c.speedtest.net/speedtest-servers-static.php',
+      'http://speedtest.net/speedtest-servers.php',
+      'http://c.speedtest.net/speedtest-servers.php'
+    ];
+
+    for (const url of urls) {
+      try {
+        const response = await axios.get(url);
+        const servers = await xml2js.parseStringPromise(response.data);
+        return servers.settings.servers[0].server.map(s => s.$);
+      } catch (err) {
+        console.error(`Error fetching servers from ${url}:`, err);
+      }
+      throw new Error('Failed to fetch servers');
+    }
+  }
   useEffect(() => {
 
     const fetchServerInfo = async () => {
