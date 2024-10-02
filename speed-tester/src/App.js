@@ -31,7 +31,7 @@ function App() {
       const servers = parser.parse(response.data);
       return servers.settings.servers.server.map(s => s.$);
     } catch (err) {
-      console.error(`Error fetching servers from ${url}:`, err);
+      console.error(`Error fetching servers in getServer() frontend`, err);
       throw new Error('Failed to fetch servers');
     }
 
