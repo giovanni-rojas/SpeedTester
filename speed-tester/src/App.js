@@ -19,10 +19,10 @@ function App() {
   
   async function getServers() {
     const urls = [
-      'http://speedtest.net/speedtest-servers-static.php',
-      'http://c.speedtest.net/speedtest-servers-static.php',
-      'http://speedtest.net/speedtest-servers.php',
-      'http://c.speedtest.net/speedtest-servers.php'
+      'https://speedtest.net/speedtest-servers-static.php',
+      'https://c.speedtest.net/speedtest-servers-static.php',
+      'https://speedtest.net/speedtest-servers.php',
+      'https://c.speedtest.net/speedtest-servers.php'
     ];
 
     const parser = new XMLParser();
@@ -43,11 +43,11 @@ function App() {
     const fetchServerInfo = async () => {
       try {
         // Fetch user's IP address
-        const ipResponse = await axios.get('https://api.ipify.org?format=json'); // Added line
+        const ipResponse = await axios.get(`${apiUrl}/get-ip`); // Updated line
         const userIp = ipResponse.data.ip; // Added line
 
         const servers = await getServers();
-        console.log('Fetched Servers:', servers);
+        console.log('Fetched Servers new build:', servers);
 
         // Send IP address to backend to fetch server info
         const response = await axios.get(`${apiUrl}/server-info`, { // Updated line
