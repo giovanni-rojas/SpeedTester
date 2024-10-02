@@ -5,11 +5,9 @@ import logo from './login.png';
 import './App.css';
 
 function App() {
-  const [ token, setToken ] = useState(localStorage.getItem('token'));
   const [ downloadSpeed, setDownloadSpeed ] = useState(null);
   const [ uploadSpeed, setUploadSpeed ] = useState(null);
   const [ ping, setPing ] = useState(null);
-  const [ notes, setNotes ] = useState('');
   const [ testProgress, setTestProgress ] = useState(0);
   const [ testRunning, setTestRunning ] = useState(false);
   const [ currentStep, setCurrentStep ] = useState('');
@@ -23,7 +21,6 @@ function App() {
     const fetchServerInfo = async () => {
       try {
         const response = await axios.get(`${apiUrl}/server-info`);
-        console.log("server info fine");
         setServerInfo(response.data);
         setLoading(false);
       } catch (err) {
@@ -34,9 +31,9 @@ function App() {
 
     fetchServerInfo();
 
-    const eventSource = new EventSource(`${apiUrl}/events`);
-    console.log("event source fine");
-    eventSource.onmessage = (event) => {
+    const ws = new WebSocket(`${apiUrl.replace(/^http/, 'ws')}/events`);
+    console.log("WebSocket connection established");
+    ws.onmessage = (event) => {
       const { stage, progress } = JSON.parse(event.data);
       setTestProgress( progress );
       switch (stage) {
@@ -57,7 +54,7 @@ function App() {
       }
     };
     return () => {
-      eventSource.close();
+      ws.close();
     };
   }, [apiUrl]);
 
@@ -71,7 +68,7 @@ function App() {
     setCurrentStep('');
 
     try {
-      const response = await axios.get('https://polar-shore-47076-dff09794a022.herokuapp.com/run-speedtest');
+      const response = await axios.get(`${apiUrl}/run-speedtest`);
       const { download_speed, upload_speed, ping } = response.data;
       setDownloadSpeed(download_speed.toFixed(1));
       setUploadSpeed(upload_speed.toFixed(1));
@@ -86,42 +83,6 @@ function App() {
       setTestRunning(false);
     }
 
-    // const eventSource = new EventSource('http://localhost:5000/run-speedtest');
-
-    // eventSource.onmessage = (event) => {
-    //   const data = JSON.parse(event.data);
-    //   setTestProgress(data.progress);
-
-    //   if (data.results) {
-    //     setDownloadSpeed(data.results.download_speed.toFixed(2));
-    //     setUploadSpeed(data.results.upload_speed.toFixed(2));
-    //     setPing(data.results.ping.toFixed(1));
-    //     setTestProgress(false);
-    //     eventSource.close();
-    //   }
-    // };
-
-    // eventSource.onerror = (err) => {
-    //   console.error('Error running speed test:', err);
-    //   alert('Failed to run speed test');
-    //   setTestRunning(false);
-    //   eventSource.close();
-    // }
-  }
-
-  const submitSpeedTest = async () => {
-    try {
-      await axios.post('https://polar-shore-47076-dff09794a022.herokuapp.com/speedtest', {
-        download_speed: downloadSpeed,
-        upload_speed: uploadSpeed,
-        notes,
-      }, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      alert('Speed test submitted succesfully!');
-    } catch (err) {
-      alert('Failed to submit speed test');
-    }
   }
 
   const handleLoginClick = (event) => {
