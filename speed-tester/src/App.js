@@ -29,6 +29,7 @@ function App() {
         const response = await axios.get(`${apiUrl}/server-info`, { // Updated line
           params: { ip: userIp } // Added line
         });
+        console.log('Server Info Response:', response.data); // Added line
         setServerInfo(response.data);
         setLoading(false);
       } catch (err) {
