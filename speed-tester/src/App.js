@@ -20,7 +20,14 @@ function App() {
 
     const fetchServerInfo = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/server-info`);
+        // Fetch user's IP address
+        const ipResponse = await axios.get('https://api.ipify.org?format=json'); // Added line
+        const userIp = ipResponse.data.ip; // Added line
+
+        // Send IP address to backend to fetch server info
+        const response = await axios.get(`${apiUrl}/server-info`, { // Updated line
+          params: { ip: userIp } // Added line
+        });
         setServerInfo(response.data);
         setLoading(false);
       } catch (err) {
@@ -32,7 +39,7 @@ function App() {
     fetchServerInfo();
 
     const ws = new WebSocket(`${apiUrl.replace(/^http/, 'ws')}/events`);
-    console.log("WebSocket connection established");
+    console.log("WebSocket connection established?");
     ws.onmessage = (event) => {
       const { stage, progress } = JSON.parse(event.data);
       setTestProgress( progress );
