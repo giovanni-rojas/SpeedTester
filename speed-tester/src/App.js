@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
-import { XMLParser } from 'fast-xml-parser';
 import logo from './login.png';
 import './App.css';
 
@@ -12,49 +11,80 @@ function App() {
   const [ testProgress, setTestProgress ] = useState(0);
   const [ testRunning, setTestRunning ] = useState(false);
   const [ currentStep, setCurrentStep ] = useState('');
+  const [ ispInfo, setIspInfo ] = useState(null);
   const [ serverInfo, setServerInfo ] = useState(null);
   const [ loading, setLoading ] = useState(true);
 
   const apiUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+
+  async function getISPInfo() {
+    try {
+      // Fetch user's IP address and location info using ipinfo.io
+      const ipResponse = await axios.get('https://api.ipify.org?format=json');
+      const userIp = ipResponse.data.ip;
+      console.log('User IP:', userIp);
+
+      const targetUrl = 'https://ipinfo.io/';
+      const locationResponse = await axios.get(`${proxyUrl}${targetUrl}${userIp}/json`);
+      const { city, region, country, loc } = locationResponse.data;
+      const [latitude, longitude] = loc.split(',');
   
-  async function getServers() {
-    const urls = [
-      'https://speedtest.net/speedtest-servers-static.php',
-      'https://c.speedtest.net/speedtest-servers-static.php',
-      'https://speedtest.net/speedtest-servers.php',
-      'https://c.speedtest.net/speedtest-servers.php'
-    ];
-
-    const parser = new XMLParser();
-
-    for (const url of urls) {
-      try {
-        const response = await axios.get(url);
-        const servers = parser.parse(response.data);
-        return servers.settings.servers.server.map(s => s.$);
-      } catch (err) {
-        console.error(`Error fetching servers from ${url}:`, err);
-      }
-      throw new Error('Failed to fetch servers');
+      return { userIp, city, region, country, latitude, longitude };
+  
+    } catch (error) {
+      console.error('Error fetching ISP info:', error);
+      return null;
     }
   }
 
+  async function getServers() {
+    try {
+      const targetUrl = 'https://www.speedtest.net/api/js/servers?engine=js';
+      const response = await axios.get(proxyUrl + targetUrl);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching servers:', error);
+      return [];
+    }
+  }
+
+  function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius of the earth in km
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * 
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Distance in km
+  }
+
+  async function getClosestServers(userLocation, servers) { 
+    const { latitude, longitude } = userLocation;
+    servers.forEach(server => {
+      server.distance = calculateDistance(latitude, longitude, server.lat, server.lon);
+    });
+    servers.sort((a, b) => a.distance - b.distance);
+    return servers.slice(0, 5);
+  }
+
   useEffect(() => {
-    const fetchServerInfo = async () => {
+    const fetchISPandServerInfo = async () => {
       try {
         // Fetch user's IP address
-        const ipResponse = await axios.get('https://api.ipify.org?format=json');
-        const userIp = ipResponse.data.ip;
+        const userLocation = await getISPInfo();
+        setIspInfo(userLocation);
+        console.log('Fetched IP Location:', userLocation);
 
+        // Fetch servers and filter by closest to user location
         const servers = await getServers();
-        console.log('Fetched Servers new builddd:', servers);
+        const closestServers = await getClosestServers(userLocation, servers);
+        //setServerInfo(closestServers)
+        console.log('Fetched Closest Servers no cli:', closestServers);
 
-        // Send IP address to backend to fetch server info
-        const response = await axios.get(`${apiUrl}/server-info`, {
-          params: { ip: userIp, servers: JSON.stringify(servers) }
-        });
-        console.log('Server Info Response:', response.data);
-        setServerInfo(response.data);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching server info:', err);
@@ -62,10 +92,10 @@ function App() {
       }
     };
 
-    fetchServerInfo();
+    fetchISPandServerInfo();
 
     const ws = new WebSocket(`${apiUrl.replace(/^http/, 'ws')}/events`);
-    console.log("WebSocket connection established??");
+    console.log("WebSocket connection established?????");
     ws.onmessage = (event) => {
       const { stage, progress } = JSON.parse(event.data);
       setTestProgress(progress);
@@ -162,8 +192,8 @@ function App() {
                       <div className="info-container">
                         <div className="isp-info">
                           <div className="icon-text">
-                            <p className="name">{serverInfo.isp}</p>
-                            <p className="location">{serverInfo.location}</p>
+                            <p className="name">{}</p>
+                            <p className="location">{}</p>
                           </div>
                           <img src="wifi.jpg" alt="Wifi Icon" className="icon" />
                         </div>
@@ -174,8 +204,8 @@ function App() {
                         <div className="server-info">
                           <img src="server-round.png" alt="Server Icon" className="icon" />
                           <div className="icon-text">
-                            <p className="name">{serverInfo.server.sponsor}</p>
-                            <p className="location">{serverInfo.server.location}</p>
+                            <p className="name">{}</p>
+                            <p className="location">{}</p>
                           </div>
                         </div>
                       </div>
