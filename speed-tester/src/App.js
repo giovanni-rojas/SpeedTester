@@ -18,26 +18,25 @@ function App() {
   const apiUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
   
   async function getServers() {
-    const urls = [
-      'https://speedtest.net/speedtest-servers-static.php',
-      'https://c.speedtest.net/speedtest-servers-static.php',
-      'https://speedtest.net/speedtest-servers.php',
-      'https://c.speedtest.net/speedtest-servers.php'
-    ];
+    // const urls = [
+    //   'https://speedtest.net/speedtest-servers-static.php',
+    //   'https://c.speedtest.net/speedtest-servers-static.php',
+    //   'https://speedtest.net/speedtest-servers.php',
+    //   'https://c.speedtest.net/speedtest-servers.php'
+    // ];
+    try {
+      const response = await axios.get(`${apiUrl}/get-servers`);
 
-    const parser = new XMLParser();
-
-    for (const url of urls) {
-      try {
-        const response = await axios.get(url);
-        const servers = parser.parse(response.data);
-        return servers.settings.servers.server.map(s => s.$);
-      } catch (err) {
-        console.error(`Error fetching servers from ${url}:`, err);
-      }
+      const parser = new XMLParser();
+      const servers = parser.parse(response.data);
+      return servers.settings.servers.server.map(s => s.$);
+    } catch (err) {
+      console.error(`Error fetching servers from ${url}:`, err);
       throw new Error('Failed to fetch servers');
     }
+
   }
+
   useEffect(() => {
 
     const fetchServerInfo = async () => {
@@ -47,12 +46,12 @@ function App() {
         const userIp = ipResponse.data.ip; // Added line
 
         const servers = await getServers();
-        console.log('Fetched Servers new build:', servers);
+        console.log('Fetched Servers new buildd:', servers);
 
         // Send IP address to backend to fetch server info
         const response = await axios.get(`${apiUrl}/server-info`, { // Updated line
-          ip: userIp, // Added line
-          servers: servers
+          params: { ip: userIp },
+          data: { servers: servers }
         });
         console.log('Server Info Response:', response.data); // Added line
         setServerInfo(response.data);
@@ -66,7 +65,7 @@ function App() {
     fetchServerInfo();
 
     const ws = new WebSocket(`${apiUrl.replace(/^http/, 'ws')}/events`);
-    console.log("WebSocket connection established??");
+    console.log("WebSocket connection established???");
     ws.onmessage = (event) => {
       const { stage, progress } = JSON.parse(event.data);
       setTestProgress( progress );
