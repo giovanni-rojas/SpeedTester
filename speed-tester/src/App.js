@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import logo from './login.png';
 import './App.css';
+const state = require('us-state-converter');
 
 function App() {
   const [ downloadSpeed, setDownloadSpeed ] = useState(null);
@@ -24,14 +25,28 @@ function App() {
       // Fetch user's IP address and location info using ipinfo.io
       const ipResponse = await axios.get('https://api.ipify.org?format=json');
       const userIp = ipResponse.data.ip;
-      console.log('User IP:', userIp);
+      //console.log('User IP:', userIp);
 
       const targetUrl = 'https://ipinfo.io/';
       const locationResponse = await axios.get(`${proxyUrl}${targetUrl}${userIp}/json`);
-      const { city, region, country, loc } = locationResponse.data;
+      const { hostname, city, region, loc, org } = locationResponse.data;
+      //console.log('Hostname info:', hostname );
       const [latitude, longitude] = loc.split(',');
-  
-      return { userIp, city, region, country, latitude, longitude };
+
+      const domainRegex = /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)*([a-z0-9][a-z0-9-]{0,61}[a-z0-9])\.[a-z]{2,}/i;
+      const match = hostname.match(domainRegex);
+      let name = match ? match[1] : org.split(' ').slice(1).join(' ');
+      name = name.charAt(0).toUpperCase() + name.slice(1);
+
+      //console.log('Shortened ISP Name:', ispName);
+
+      // Convert state name to abbreviation
+      const abbreviation = state.abbr(region) || region;
+      const location = `${city}, ${abbreviation}`;
+
+      //console.log('ISP Location?', location);
+
+      return { latitude, longitude, isp: name, location };
   
     } catch (error) {
       console.error('Error fetching ISP info:', error);
@@ -77,13 +92,14 @@ function App() {
         // Fetch user's IP address
         const userLocation = await getISPInfo();
         setIspInfo(userLocation);
-        console.log('Fetched IP Location:', userLocation);
+        //console.log('Fetched IP Location w org:', userLocation);
 
         // Fetch servers and filter by closest to user location
         const servers = await getServers();
         const closestServers = await getClosestServers(userLocation, servers);
-        //setServerInfo(closestServers)
-        console.log('Fetched Closest Servers no cli:', closestServers);
+        const closestServer = closestServers[0];
+        setServerInfo(closestServer)
+        //console.log('Closest Server:', closestServer);
 
         setLoading(false);
       } catch (err) {
@@ -95,7 +111,7 @@ function App() {
     fetchISPandServerInfo();
 
     const ws = new WebSocket(`${apiUrl.replace(/^http/, 'ws')}/events`);
-    console.log("WebSocket connection established?????");
+    //console.log("WebSocket connection established???");
     ws.onmessage = (event) => {
       const { stage, progress } = JSON.parse(event.data);
       setTestProgress(progress);
@@ -192,8 +208,8 @@ function App() {
                       <div className="info-container">
                         <div className="isp-info">
                           <div className="icon-text">
-                            <p className="name">{}</p>
-                            <p className="location">{}</p>
+                            <p className="name">{ispInfo.isp}</p>
+                            <p className="location">{ispInfo.location}</p>
                           </div>
                           <img src="wifi.jpg" alt="Wifi Icon" className="icon" />
                         </div>
@@ -204,8 +220,8 @@ function App() {
                         <div className="server-info">
                           <img src="server-round.png" alt="Server Icon" className="icon" />
                           <div className="icon-text">
-                            <p className="name">{}</p>
-                            <p className="location">{}</p>
+                            <p className="name">{serverInfo.sponsor}</p>
+                            <p className="location">{serverInfo.name}</p>
                           </div>
                         </div>
                       </div>
@@ -223,8 +239,8 @@ function App() {
                         <div className="info-container centered">
                           <div className="isp-info">
                             <div className="icon-text">
-                              <p className="name">{serverInfo.isp}</p>
-                              <p className="location">{serverInfo.location}</p>
+                              <p className="name">{ispInfo.isp}</p>
+                              <p className="location">{ispInfo.location}</p>
                             </div>
                             <img src="wifi.jpg" alt="Wifi Icon" className="icon" />
                           </div>
@@ -235,8 +251,8 @@ function App() {
                           <div className="server-info">
                             <img src="server-round.png" alt="Server Icon" className="icon" />
                             <div className="icon-text">
-                              <p className="name">{serverInfo.server.sponsor}</p>
-                              <p className="location">{serverInfo.server.location}</p>
+                              <p className="name">{serverInfo.sponsor}</p>
+                              <p className="location">{serverInfo.name}</p>
                             </div>
                           </div>
                         </div>
