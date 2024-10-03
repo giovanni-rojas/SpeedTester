@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/SpeedTester/static/css/main.708599a3.css",
-    "main.js": "/SpeedTester/static/js/main.6aefd71d.js",
+    "main.js": "/SpeedTester/static/js/main.2ad8fc4c.js",
     "static/js/453.94d1f4e0.chunk.js": "/SpeedTester/static/js/453.94d1f4e0.chunk.js",
     "index.html": "/SpeedTester/index.html",
     "main.708599a3.css.map": "/SpeedTester/static/css/main.708599a3.css.map",
-    "main.6aefd71d.js.map": "/SpeedTester/static/js/main.6aefd71d.js.map",
+    "main.2ad8fc4c.js.map": "/SpeedTester/static/js/main.2ad8fc4c.js.map",
     "453.94d1f4e0.chunk.js.map": "/SpeedTester/static/js/453.94d1f4e0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.708599a3.css",
-    "static/js/main.6aefd71d.js"
+    "static/js/main.2ad8fc4c.js"
   ]
 }
