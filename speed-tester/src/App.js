@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import logo from './login.png';
+import SpeedTest from '@cloudflare/speedtest';
 import './App.css';
 const state = require('us-state-converter');
+
+// new SpeedTest().onFinish = results => console.log(results.getSummary());
 
 function App() {
   const [ downloadSpeed, setDownloadSpeed ] = useState(null);
@@ -146,13 +149,14 @@ function App() {
     setCurrentStep('');
 
     try {
-      const response = await axios.get(`${apiUrl}/run-speedtest`);
-      const { download_speed, upload_speed, ping } = response.data;
-      setDownloadSpeed(download_speed.toFixed(1));
-      setUploadSpeed(upload_speed.toFixed(1));
-      setPing(ping.toFixed(1));
-
-      setTestRunning(false);
+      const speedTest = new SpeedTest();
+      speedTest.onFinish = results => {
+        const summary = results.getSummary();
+        setDownloadSpeed((summary.download / 1_000_000).toFixed(1));
+        setUploadSpeed((summary.upload / 1_000_000).toFixed(1));
+        setPing(summary.latency.toFixed(1));
+        setTestRunning(false);
+      }
     } catch (error) {
       console.error('Error running speed test:', error);
       alert('Failed to run speed test');
@@ -229,11 +233,11 @@ function App() {
                   </>
                 ) : (
                   <div className="progress-container">
-                    <div className="progress-background"></div>
+                    {/* <div className="progress-background"></div>
                     <p key={currentStep} className="current-step ellipsis-slow">
                       {currentStep}
                     </p>
-                    <div className="progress-bar" style={{ width: `${testProgress}%` }}></div>
+                    <div className="progress-bar" style={{ width: `${testProgress}%` }}></div> */}
                     {!loading && serverInfo && (
                       <div className="info-wrapper">
                         <div className="info-container centered">
