@@ -115,33 +115,7 @@ function App() {
     };
 
     fetchISPandServerInfo();
-
-    const ws = new WebSocket(`${apiUrl.replace(/^http/, 'ws')}/events`);
-    //console.log("WebSocket connection established???");
-    ws.onmessage = (event) => {
-      const { stage, progress } = JSON.parse(event.data);
-      setTestProgress(progress);
-      switch (stage) {
-        case 'config':
-          setCurrentStep('Establishing connection to server.');
-          break;
-        case 'server':
-          setCurrentStep('Running download test.');
-          break;
-        case 'download':
-          setCurrentStep('Running upload test.');
-          break;
-        case 'upload':
-          setCurrentStep('Running upload test.');
-          break;
-        default:
-          setCurrentStep('');
-      }
-    };
-    return () => {
-      ws.close();
-    };
-  }, [apiUrl]);
+  }, []);
 
   const runSpeedTest = async () => {
     setDownloadSpeed(null);
