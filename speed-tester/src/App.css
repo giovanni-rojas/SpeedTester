@@ -11,6 +11,8 @@ body, html {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .navbar {
@@ -23,6 +25,7 @@ body, html {
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
+  box-sizing: border-box;
 }
 .navbar-link {
   display: flex;
@@ -83,7 +86,6 @@ body, html {
   cursor: pointer;
   border-radius: 50%;
   background-color: white;
-  margin-right: 25px;
 }
 
 .dropdown-content {
@@ -378,6 +380,7 @@ body, html {
   border-radius: 10px;
   background-color: rgba(249, 249, 249, 0.75);
   animation: glow 2s infinite;
+  margin-bottom: 60px;
 }
 
 @keyframes glow {
@@ -460,6 +463,10 @@ body, html {
   white-space: nowrap;
 }
 
+.info-container-running {
+  margin-bottom: 10px;
+}
+
 .centered {
   display: flex;
   justify-content: center;
@@ -536,4 +543,167 @@ body, html {
   width: 100%;
   position: fixed;
   bottom: 0;
+}
+
+@media (max-width: 1200px) {
+  .start-button {
+    width: 250px;
+    height: 250px;
+    font-size: 35px;
+  }
+
+  .results-values {
+    font-size: 1.5em;
+  }
+
+  .results-labels {
+    font-size: 0.9em;
+  }
+
+  .info-container {
+    padding-bottom: 30px;
+  }
+
+  .results-container {
+    margin-bottom: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 15px;
+  }
+
+  .navbar-logo {
+    height: 40px;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+
+  .person-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .start-button {
+    width: 250px;
+    height: 250px;
+    font-size: 30px;
+  }
+
+  .results-values {
+    font-size: 1.5em;
+  }
+
+  .results-labels {
+    font-size: 0.9em;
+  }
+
+  .progress-container {
+    width: 300px;
+  }
+
+  .results-container {
+    padding: 15px;
+    margin-bottom: 60px;
+  }
+
+  .results-content {
+    padding: 5px 15px;
+  }
+
+  .results-labels > div, .results-values > div {
+    text-align: center;
+  }
+
+  .info-wrapper {
+    flex-direction: column;
+  }
+
+  .info-container {
+    padding: 15px;
+  }
+
+  .icon-text {
+    font-size: 0.8em;
+  }
+
+  .icon {
+    margin: 0 10px;
+  }
+
+  .arrows {
+    display: flex;
+  }
+
+  .arrow {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .navbar {
+    padding: 5px 10px;
+  }
+
+  .navbar-logo {
+    height: 30px;
+  }
+
+  .person-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .start-button {
+    width: 225px;
+    height: 225px;
+    font-size: 25px;
+  }
+
+  .results-container {
+    padding: 10px;
+    margin-bottom: 60px;
+  }
+
+  .results-content {
+    padding: 5px 10px;
+  }
+
+  .results-values {
+    font-size: 1.2em;
+  }
+
+  .results-labels {
+    font-size: 0.8em;
+  }
+
+  .info-container {
+    padding: 30px 0;
+  }
+
+  .footer {
+    font-size: 1em;
+  }
+
+  .isp-info, .server-info {
+    max-height: 30px;
+  }
+
+  .app, .speedtest-container, .results-container {
+    padding: 10px;
+    margin: 0;
+  }
+
+  .app, .speedtest-container {
+    height: 100vh;
+    box-sizing: border-box;
+  }
 }
