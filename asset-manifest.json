@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/SpeedTester/static/css/main.3bfb80f8.css",
-    "main.js": "/SpeedTester/static/js/main.36087bd9.js",
+    "main.css": "/SpeedTester/static/css/main.df60ccb5.css",
+    "main.js": "/SpeedTester/static/js/main.b1747d7b.js",
     "static/js/453.94d1f4e0.chunk.js": "/SpeedTester/static/js/453.94d1f4e0.chunk.js",
     "static/media/speedtester-round.png": "/SpeedTester/static/media/speedtester-round.6f9adb0171080ea0a372.png",
     "static/media/server-round.png": "/SpeedTester/static/media/server-round.9fdc3df86acf47a29be5.png",
     "static/media/wifi.jpg": "/SpeedTester/static/media/wifi.b44566a393186fdb5efc.jpg",
     "index.html": "/SpeedTester/index.html",
-    "main.3bfb80f8.css.map": "/SpeedTester/static/css/main.3bfb80f8.css.map",
-    "main.36087bd9.js.map": "/SpeedTester/static/js/main.36087bd9.js.map",
+    "main.df60ccb5.css.map": "/SpeedTester/static/css/main.df60ccb5.css.map",
+    "main.b1747d7b.js.map": "/SpeedTester/static/js/main.b1747d7b.js.map",
     "453.94d1f4e0.chunk.js.map": "/SpeedTester/static/js/453.94d1f4e0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3bfb80f8.css",
-    "static/js/main.36087bd9.js"
+    "static/css/main.df60ccb5.css",
+    "static/js/main.b1747d7b.js"
   ]
 }
