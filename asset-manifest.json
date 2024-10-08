@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/SpeedTester/static/css/main.ff396a34.css",
+    "main.css": "/SpeedTester/static/css/main.3cadd667.css",
     "main.js": "/SpeedTester/static/js/main.d0a69980.js",
     "static/js/453.94d1f4e0.chunk.js": "/SpeedTester/static/js/453.94d1f4e0.chunk.js",
     "static/media/speedtester-round.png": "/SpeedTester/static/media/speedtester-round.6f9adb0171080ea0a372.png",
     "static/media/server-round.png": "/SpeedTester/static/media/server-round.9fdc3df86acf47a29be5.png",
     "static/media/wifi.jpg": "/SpeedTester/static/media/wifi.b44566a393186fdb5efc.jpg",
     "index.html": "/SpeedTester/index.html",
-    "main.ff396a34.css.map": "/SpeedTester/static/css/main.ff396a34.css.map",
+    "main.3cadd667.css.map": "/SpeedTester/static/css/main.3cadd667.css.map",
     "main.d0a69980.js.map": "/SpeedTester/static/js/main.d0a69980.js.map",
     "453.94d1f4e0.chunk.js.map": "/SpeedTester/static/js/453.94d1f4e0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ff396a34.css",
+    "static/css/main.3cadd667.css",
     "static/js/main.d0a69980.js"
   ]
 }
