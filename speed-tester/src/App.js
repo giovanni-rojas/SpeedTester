@@ -123,16 +123,50 @@ function App() {
     setPing(null);
     setTestRunning(true);
     setTestProgress(0);
-    setCurrentStep('');
+    setCurrentStep('Establishing connection to server');
 
     try {
       const speedTest = new SpeedTest();
+      speedTest.onResultsChange = ({ type }) => {
+        setTestProgress(prev => {
+          let newProgress = prev;
+          if (type === 'latency') {
+            newProgress = Math.min(prev + 0.25, 100);
+          }
+          else if (type === 'download') {
+            newProgress = Math.min(prev + 0.55, 100);
+          }
+          else if (type === 'upload') {
+            newProgress = Math.min(prev + 0.7, 100);
+          }
+          else if (type == 'packetLoss') {
+            newProgress = Math.min(prev + 0.01, 100);
+          }
+
+          if (newProgress <= 2) {
+            setCurrentStep('Establishing connection to server');
+          }
+          else if (newProgress <= 6) {
+            setCurrentStep('Measuring latency.');
+          }
+          else if (newProgress <= 60) {
+            setCurrentStep('Testing download speed.');
+          }
+          else {
+            setCurrentStep('Testing upload speed');
+          }
+
+          return newProgress;
+        });
+      };
       speedTest.onFinish = results => {
         const summary = results.getSummary();
         setDownloadSpeed((summary.download / 1_000_000).toFixed(1));
         setUploadSpeed((summary.upload / 1_000_000).toFixed(1));
         setPing(summary.latency.toFixed(1));
         setTestRunning(false);
+        setTestProgress(100);
+        setCurrentStep('Test complete!');
       }
     } catch (error) {
       console.error('Error running speed test:', error);
@@ -210,11 +244,11 @@ function App() {
                   </>
                 ) : (
                   <div className="progress-container">
-                    {/* <div className="progress-background"></div>
+                    <div className="progress-background"></div>
                     <p key={currentStep} className="current-step ellipsis-slow">
                       {currentStep}
                     </p>
-                    <div className="progress-bar" style={{ width: `${testProgress}%` }}></div> */}
+                    <div className="progress-bar" style={{ width: `${testProgress}%` }}></div>
                     {!loading && serverInfo && (
                       <div className="info-wrapper">
                         <div className="info-container centered">
