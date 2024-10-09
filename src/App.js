@@ -19,7 +19,6 @@ function App() {
 
   async function getISPInfo() {
     try {
-      // Fetch user's IP address and location info using ipinfo.io
       const ipResponse = await axios.get('https://api.ipify.org?format=json');
       const userIp = ipResponse.data.ip;
 
@@ -72,7 +71,6 @@ function App() {
   useEffect(() => {
     const fetchISPandServerInfo = async () => {
       try {
-        // Fetch user's IP address
         const userLocation = await getISPInfo();
         setIspInfo(userLocation);
 
