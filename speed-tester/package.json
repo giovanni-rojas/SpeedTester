@@ -24,6 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:heroku": "REACT_APP_BACKEND_URL=https://polar-shore-47076-dff09794a022.herokuapp.com react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
