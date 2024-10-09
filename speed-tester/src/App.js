@@ -7,9 +7,6 @@ import wifiIcon from './wifi.jpg';
 import serverIcon from './server-round.png';
 import SpeedTest from '@cloudflare/speedtest';
 import './App.css';
-const state = require('us-state-converter');
-
-// new SpeedTest().onFinish = results => console.log(results.getSummary());
 
 function App() {
   const [ downloadSpeed, setDownloadSpeed ] = useState(null);
@@ -22,9 +19,6 @@ function App() {
   const [ serverInfo, setServerInfo ] = useState(null);
   const [ loading, setLoading ] = useState(true);
 
-  const apiUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
-
-  //const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
   const proxyUrl = `${process.env.REACT_APP_BACKEND_URL}/proxy/`;
 
   async function getISPInfo() {
@@ -48,14 +42,11 @@ function App() {
   async function getServers() {
     try {
       const targetUrl = 'https://www.speedtest.net/api/js/servers?engine=js';
-      
-      //const response = await axios.get(proxyUrl + targetUrl);
       const encodedTargetUrl = encodeURIComponent(targetUrl);
-      
       const response = await axios.get(`${proxyUrl}${encodedTargetUrl}`);
-
       return response.data;
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('Error fetching servers:', error);
       return [];
     }
@@ -88,17 +79,16 @@ function App() {
         // Fetch user's IP address
         const userLocation = await getISPInfo();
         setIspInfo(userLocation);
-        //console.log('Fetched IP Location w org:', userLocation);
 
         // Fetch servers and filter by closest to user location
         const servers = await getServers();
         const closestServers = await getClosestServers(userLocation, servers);
         const closestServer = closestServers[0];
         setServerInfo(closestServer)
-        //console.log('Closest Server:', closestServer);
 
         setLoading(false);
-      } catch (err) {
+      } 
+      catch (err) {
         console.error('Error fetching server info:', err);
         setLoading(false);
       }
@@ -295,7 +285,6 @@ function App() {
               </div>
             }
           />
-          {/* Add routes for login and register */}
         </Routes>
         <footer className="footer">
           <p>
