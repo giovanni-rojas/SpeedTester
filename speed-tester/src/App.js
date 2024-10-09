@@ -30,34 +30,15 @@ function App() {
   async function getISPInfo() {
     try {
       // Fetch user's IP address and location info using ipinfo.io
-      
       const ipResponse = await axios.get('https://api.ipify.org?format=json');
       const userIp = ipResponse.data.ip;
-      //console.log('User IP:', userIp);
 
-      const targetUrl = `https://ipinfo.io/${userIp}/json`;
-      const encodedTargetUrl = encodeURIComponent(targetUrl);
+      const locationResponse = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/ipinfo`, {
+        ip: userIp
+      });
 
-      const locationResponse = await axios.get(`${proxyUrl}${encodedTargetUrl}`);
-      const { hostname, city, region, loc, org } = locationResponse.data;
-      //console.log('Hostname info:', hostname );
-      const [latitude, longitude] = loc.split(',');
-
-      const domainRegex = /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)*([a-z0-9][a-z0-9-]{0,61}[a-z0-9])\.[a-z]{2,}/i;
-      const match = hostname.match(domainRegex);
-      let name = match ? match[1] : org.split(' ').slice(1).join(' ');
-      name = name.charAt(0).toUpperCase() + name.slice(1);
-
-      //console.log('Shortened ISP Name:', ispName);
-
-      // Convert state name to abbreviation
-      const abbreviation = state.abbr(region) || region;
-      const location = `${city}, ${abbreviation}`;
-
-      //console.log('ISP Location?', location);
-
-      return { latitude, longitude, isp: name, location };
-  
+      const { latitude, longitude, isp, location } = locationResponse.data;
+      return { latitude, longitude, isp, location };
     } catch (error) {
       console.error('Error fetching ISP info:', error);
       return null;
