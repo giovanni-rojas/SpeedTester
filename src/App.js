@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
-import logo from './login.png';
-import roundLogo from './speedtester-round.png';
-import wifiIcon from './wifi.jpg';
-import serverIcon from './server-round.png';
 import SpeedTest from '@cloudflare/speedtest';
-import './App.css';
+import './styles/App.css';
 
 function App() {
   const [ downloadSpeed, setDownloadSpeed ] = useState(null);
@@ -170,12 +166,12 @@ function App() {
         <nav className="navbar">
           <div className="left-navbar">
             <a href="/SpeedTester" className="navbar-link">
-              <img src={ roundLogo } alt="Logo" className="navbar-logo" />
+              <img src={`${process.env.PUBLIC_URL}/img/speedtester-round.png`} alt="Logo" className="navbar-logo" />
               <span className="title navbar-title">SpeedTester</span>
             </a>
           </div>
           <div className="dropdown">
-            <img src={logo} alt="Person Icon" className="person-icon" />
+            <img src={`${process.env.PUBLIC_URL}/img/login.png`} alt="Person Icon" className="person-icon" />
             <div className="dropdown-content">
               <a href="#" className="login-link" onClick={handleLoginClick}>
                 Login (Coming Soon)
@@ -206,14 +202,14 @@ function App() {
                             <p className="name">{ispInfo.isp}</p>
                             <p className="location">{ispInfo.location}</p>
                           </div>
-                          <img src={ wifiIcon } alt="Wifi Icon" className="icon" />
+                          <img src={`${process.env.PUBLIC_URL}/img/wifi.jpg`} alt="Wifi Icon" className="icon" />
                         </div>
                         <div className="arrows">
                           <div className="arrow">&#8594;</div>
                           <div className="arrow">&#8592;</div>
                         </div>
                         <div className="server-info">
-                          <img src={ serverIcon } alt="Server Icon" className="icon" />
+                          <img src={`${process.env.PUBLIC_URL}/img/server-round.png`} alt="Server Icon" className="icon" />
                           <div className="icon-text">
                             <p className="name">{serverInfo.sponsor}</p>
                             <p className="location">{serverInfo.name}</p>
@@ -237,14 +233,14 @@ function App() {
                               <p className="name">{ispInfo.isp}</p>
                               <p className="location">{ispInfo.location}</p>
                             </div>
-                            <img src={ wifiIcon } alt="Wifi Icon" className="icon" />
+                            <img src={`${process.env.PUBLIC_URL}/img/wifi.jpg`} alt="Wifi Icon" className="icon" />
                           </div>
                           <div className="arrows">
                             <div className="arrow">&#8594;</div>
                             <div className="arrow">&#8592;</div>
                           </div>
                           <div className="server-info">
-                            <img src={ serverIcon } alt="Server Icon" className="icon" />
+                            <img src={`${process.env.PUBLIC_URL}/img/server-round.png`} alt="Server Icon" className="icon" />
                             <div className="icon-text">
                               <p className="name">{serverInfo.sponsor}</p>
                               <p className="location">{serverInfo.name}</p>
