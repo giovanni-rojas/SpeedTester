@@ -24,17 +24,21 @@ function App() {
 
   const apiUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
 
-  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  //const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  const proxyUrl = `${process.env.REACT_APP_BACKEND_URL}/proxy/`;
 
   async function getISPInfo() {
     try {
       // Fetch user's IP address and location info using ipinfo.io
+      
       const ipResponse = await axios.get('https://api.ipify.org?format=json');
       const userIp = ipResponse.data.ip;
       //console.log('User IP:', userIp);
 
-      const targetUrl = 'https://ipinfo.io/';
-      const locationResponse = await axios.get(`${proxyUrl}${targetUrl}${userIp}/json`);
+      const targetUrl = `https://ipinfo.io/${userIp}/json`;
+      const encodedTargetUrl = encodeURIComponent(targetUrl);
+
+      const locationResponse = await axios.get(`${proxyUrl}${encodedTargetUrl}`);
       const { hostname, city, region, loc, org } = locationResponse.data;
       //console.log('Hostname info:', hostname );
       const [latitude, longitude] = loc.split(',');
@@ -63,7 +67,12 @@ function App() {
   async function getServers() {
     try {
       const targetUrl = 'https://www.speedtest.net/api/js/servers?engine=js';
-      const response = await axios.get(proxyUrl + targetUrl);
+      
+      //const response = await axios.get(proxyUrl + targetUrl);
+      const encodedTargetUrl = encodeURIComponent(targetUrl);
+      
+      const response = await axios.get(`${proxyUrl}${encodedTargetUrl}`);
+
       return response.data;
     } catch (error) {
       console.error('Error fetching servers:', error);
