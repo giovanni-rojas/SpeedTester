@@ -12,12 +12,11 @@ SpeedTester provides accurate, real-time network speed results by leveraging the
 - **Client and Test Server Information**: Uses [ipify](https://www.ipify.org/) and the [speedtest.net](https://www.speedtest.net/) server API to identify the user's closest testing server.
 - **Progress Visualization**: Animations display real-time updates of test progress as it runs.
 
-## Compare Results
 Compare your results with industry-standard tests like Ookla's [speedtest.net](https://www.speedtest.net/) to get a broader view of your connection speeds.
 
-## How to Run the Project
+## Usage
 
-To run this project locally, you will need Node.js installed.
+To run this app locally, you will need [Node.js](https://nodejs.org/en) installed.
 
 1. Clone the repository:
    ```bash
@@ -65,7 +64,7 @@ Contributions are welcome! Here's how you can contribute:
 Please open an issue or start a discussion before submitting large changes. Contributions that improve the app or address existing issues are greatly appreciated.
 
 ## History
-- **Version 1.0.0**: Initial release. This version includes basic network speed testing functionality using the @cloudflare/speedtest library, as well as features to display the user's client and closest test server.
+- **Version 1.0.0**: Initial release. This version includes basic network speed testing functionality using the [@cloudflare/speedtest](https://www.npmjs.com/package/@cloudflare/speedtest) library, as well as features to display the user's client and closest test server.
 
 ## Credits
 - Speed testing powered by [@cloudflare/speedtest](https://www.npmjs.com/package/@cloudflare/speedtest).
