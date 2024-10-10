@@ -1,5 +1,5 @@
 # SpeedTester
-![SpeedTester Demo](public\img\speedtester-demo-2.gif)
+![SpeedTester Demo](public/img/speedtester-demo-2.gif)
 
 ## Overview
 [SpeedTester](https://giovanni-rojas.github.io/SpeedTester/) is a React-based frontend interface for the [@cloudflare/speedtest](https://www.npmjs.com/package/@cloudflare/speedtest) library, designed to measure a user's internet connection speed.
