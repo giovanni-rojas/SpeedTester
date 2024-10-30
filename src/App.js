@@ -194,23 +194,25 @@ function App() {
                       <span className="start-text">Run Test!</span>
                     </button>
                     {!loading && serverInfo && (
-                      <div className="info-container info-container-running">
-                        <div className="isp-info">
-                          <div className="icon-text">
-                            <p className="name">{ispInfo.isp}</p>
-                            <p className="location">{ispInfo.location}</p>
+                      <div className='info-wrapper'>
+                        <div className="info-container info-container-running">
+                          <div className="isp-info">
+                            <div className="icon-text">
+                              <p className="name">{ispInfo.isp}</p>
+                              <p className="location">{ispInfo.location}</p>
+                            </div>
+                            <img src={`${process.env.PUBLIC_URL}/img/wifi.jpg`} alt="Wifi Icon" className="icon" />
                           </div>
-                          <img src={`${process.env.PUBLIC_URL}/img/wifi.jpg`} alt="Wifi Icon" className="icon" />
-                        </div>
-                        <div className="arrows">
-                          <div className="arrow">&#8594;</div>
-                          <div className="arrow">&#8592;</div>
-                        </div>
-                        <div className="server-info">
-                          <img src={`${process.env.PUBLIC_URL}/img/server-round.png`} alt="Server Icon" className="icon" />
-                          <div className="icon-text">
-                            <p className="name">{serverInfo.sponsor}</p>
-                            <p className="location">{serverInfo.name}</p>
+                          <div className="arrows">
+                            <div className="arrow">&#8594;</div>
+                            <div className="arrow">&#8592;</div>
+                          </div>
+                          <div className="server-info">
+                            <img src={`${process.env.PUBLIC_URL}/img/server-round.png`} alt="Server Icon" className="icon" />
+                            <div className="icon-text">
+                              <p className="name">{serverInfo.sponsor}</p>
+                              <p className="location">{serverInfo.name}</p>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -228,7 +230,8 @@ function App() {
                         <div className="info-container centered">
                           <div className="isp-info">
                             <div className="icon-text">
-                              <p className="name">{ispInfo.isp}</p>
+                              {/* <p className="name">{ispInfo.isp}</p> */}
+                              <p className='name'>Las Vegas Mccaran Airport in Nevada</p>
                               <p className="location">{ispInfo.location}</p>
                             </div>
                             <img src={`${process.env.PUBLIC_URL}/img/wifi.jpg`} alt="Wifi Icon" className="icon" />

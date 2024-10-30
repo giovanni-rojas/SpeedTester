@@ -450,8 +450,9 @@ body, html {
 
 
 .info-wrapper {
-  display: flex;
-  flex: 1;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
 }
 
 .info-container {
@@ -498,6 +499,10 @@ body, html {
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   color: white;
+  max-width: 15vw;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .icon-text p {
@@ -507,6 +512,10 @@ body, html {
 .name {
   font-size: 1.4em;
   color: #ffffff;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .location {
@@ -526,6 +535,7 @@ body, html {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .arrow {
@@ -566,6 +576,22 @@ body, html {
 
   .results-container {
     margin-bottom: 60px;
+  }
+
+  .name {
+    font-size: 1.1em;
+  }
+
+  .info-container {
+    width: relative;
+  }
+
+  .info-wrapper {
+    width: relative;
+  }
+
+  .icon-text {
+    max-width: 20vw;
   }
 }
 
@@ -618,10 +644,6 @@ body, html {
     text-align: center;
   }
 
-  .info-wrapper {
-    flex-direction: column;
-  }
-
   .info-container {
     padding: 15px;
   }
@@ -640,6 +662,22 @@ body, html {
 
   .arrow {
     font-size: 1.2em;
+  }
+
+  .name {
+    font-size: 1.2em;
+  }
+
+  .info-container {
+    width: relative;
+  }
+
+  .info-wrapper {
+    width: relative;
+  }
+
+  .icon-text {
+    max-width: max-content;
   }
 }
 
@@ -665,7 +703,7 @@ body, html {
   .start-button {
     width: 225px;
     height: 225px;
-    font-size: 50px;
+    font-size: 25px;
   }
 
   .results-container {
@@ -705,5 +743,17 @@ body, html {
   .app, .speedtest-container {
     height: 100vh;
     box-sizing: border-box;
+  }
+
+  .name {
+    font-size: 1em;
+  }
+
+  .info-container {
+    width: 100%;
+  }
+
+  .info-wrapper {
+    width: 100%;
   }
 }
