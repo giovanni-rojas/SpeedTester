@@ -230,8 +230,7 @@ function App() {
                         <div className="info-container centered">
                           <div className="isp-info">
                             <div className="icon-text">
-                              {/* <p className="name">{ispInfo.isp}</p> */}
-                              <p className='name'>Las Vegas Mccaran Airport in Nevada</p>
+                              <p className="name">{ispInfo.isp}</p>
                               <p className="location">{ispInfo.location}</p>
                             </div>
                             <img src={`${process.env.PUBLIC_URL}/img/wifi.jpg`} alt="Wifi Icon" className="icon" />
