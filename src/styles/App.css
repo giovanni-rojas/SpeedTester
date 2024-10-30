@@ -750,10 +750,10 @@ body, html {
   }
 
   .info-container {
-    width: 100%;
+    width: 100vw;
   }
 
   .info-wrapper {
-    width: 100%;
+    width: 100vw;
   }
 }
