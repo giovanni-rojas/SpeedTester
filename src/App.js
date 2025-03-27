@@ -14,8 +14,8 @@ function App() {
   const [ ispInfo, setIspInfo ] = useState(null);
   const [ serverInfo, setServerInfo ] = useState(null);
   const [ loading, setLoading ] = useState(true);
-
-  const proxyUrl = `${process.env.REACT_APP_BACKEND_URL}/proxy/`;
+  
+  const proxyUrl = `${process.env.REACT_APP_BACKEND_URL}/proxy/` || 'https://speed-tester-api.vercel.app/proxy';
 
   async function getISPInfo() {
     try {

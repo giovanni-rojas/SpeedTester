@@ -555,7 +555,7 @@ body, html {
   bottom: 0;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
   .start-button {
     width: 250px;
     height: 250px;
